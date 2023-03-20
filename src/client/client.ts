@@ -3,11 +3,13 @@ import {
   projectBuilder,
   roundBuilder,
   voteBuilder,
+  roundApplicationBuilder,
 } from "./builders";
 import {
   Project,
   Round,
   Vote,
+  Application,
 } from "./types";
 
 export class Client extends BaseClient {
@@ -15,6 +17,7 @@ export class Client extends BaseClient {
     projects: "/data/:chainId/projects.json",
     rounds: "/data/:chainId/rounds.json",
     roundVotes: "/data/:chainId/rounds/:roundId/votes.json",
+    roundApplications: "/data/:chainId/rounds/:roundId/projects.json",
   };
 
   constructor(fetchImpl: typeof fetch, baseURI: string, chainId: number) {
@@ -39,5 +42,13 @@ export class Client extends BaseClient {
 
   getRoundVotes(roundId: string): Promise<Vote[]> {
     return this.fetchResources("roundVotes", { roundId }, voteBuilder);
+  }
+
+  getRoundApplications(roundId: string): Promise<Application[]> {
+    return this.fetchResources("roundApplications", { roundId }, roundApplicationBuilder);
+  }
+
+  getRoundApplicationBy(roundId: string, key: keyof Application, value: any): Promise<Application | undefined> {
+    return this.fetchResourceFromList("roundApplications", { roundId }, roundApplicationBuilder, key, value);
   }
 }

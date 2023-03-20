@@ -16,3 +16,11 @@ export type Vote = {
   token: string;
   amount: string;
 };
+
+export type Application = Project & {
+  id: string;
+  projectNumber: number;
+  roundId: string;
+  status: string;
+  payoutAddress: string;
+};

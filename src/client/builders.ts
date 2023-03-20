@@ -2,6 +2,7 @@ import {
   ResourceBuilder,
   Project,
   Round,
+  Application,
   Vote,
 } from "./types";
 
@@ -20,4 +21,12 @@ export const voteBuilder: ResourceBuilder<Vote> = (obj: any): Vote => ({
   id: obj.id,
   token: obj.token,
   amount: obj.amount,
+});
+
+export const roundApplicationBuilder: ResourceBuilder<Application> = (obj: any): Application => ({
+  id: obj.id,
+  projectNumber: obj.projectNumber,
+  roundId: obj.roundId,
+  status: obj.status,
+  payoutAddress: obj.payoutAddress,
 });

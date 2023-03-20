@@ -29,4 +29,7 @@ export const roundApplicationBuilder: ResourceBuilder<Application> = (obj: any):
   roundId: obj.roundId,
   status: obj.status,
   payoutAddress: obj.payoutAddress,
+  amountUSD: obj.amountUSD,
+  votes: obj.votes,
+  uniqueContributors: obj.uniqueContributors,
 });

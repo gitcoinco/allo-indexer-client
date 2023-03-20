@@ -23,4 +23,7 @@ export type Application = Project & {
   roundId: string;
   status: string;
   payoutAddress: string;
+  amountUSD: number;
+  votes: number;
+  uniqueContributors: number;
 };

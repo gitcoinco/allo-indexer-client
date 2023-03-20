@@ -25,12 +25,16 @@ export class Client extends BaseClient {
     return this.fetchResources("projects", {}, projectBuilder);
   }
 
-  getProject(key: keyof Project, value: any): Promise<Project | undefined> {
+  getProjectBy(key: keyof Project, value: any): Promise<Project | undefined> {
     return this.fetchResourceFromList("projects", {}, projectBuilder, key, value);
   }
 
   getRounds(): Promise<Round[]> {
     return this.fetchResources("rounds", {}, roundBuilder);
+  }
+
+  getRoundBy(key: keyof Round, value: any): Promise<Round | undefined> {
+    return this.fetchResourceFromList("rounds", {}, roundBuilder, key, value);
   }
 
   getRoundVotes(roundId: string): Promise<Vote[]> {

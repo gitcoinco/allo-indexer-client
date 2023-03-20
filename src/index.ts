@@ -1,4 +1,6 @@
-type RouteParamValue = string | number;
+type RouteParams = {
+  [key: string]: string | number;
+}
 
 type Project = {
   id: string;
@@ -49,18 +51,19 @@ abstract class BaseClient {
     this.chainId = chainId;
   }
 
-  protected fetchResources<T>(builder: ResourceBuilder<T>, url: string): Promise<T[]> {
+  protected fetchResources<T>(routeName: string, params: RouteParams, builder: ResourceBuilder<T>): Promise<T[]> {
+    const url = this.buildURL(routeName, params);
     return fetch(url)
       .then(resp => resp.json())
       .then(list => list.map((obj: Array<any>) => builder(obj)));
   }
 
-  protected fetchResourceFromList<T>(builder: ResourceBuilder<T>, url: string, key: keyof T, value: any): Promise<T | undefined> {
-    return this.fetchResources(builder, url)
+  protected fetchResourceFromList<T>(routeName: string, params: RouteParams, builder: ResourceBuilder<T>, key: keyof T, value: any): Promise<T | undefined> {
+    return this.fetchResources(routeName, params, builder)
       .then((list: T[]) => list.find((r: T) => r[key] === value));
   }
 
-  protected buildURL(routeName: string, params: { [key: string]: RouteParamValue }): string {
+  protected buildURL(routeName: string, params: RouteParams): string {
     const path = this.compileRoute(this.routes[routeName], {
       ...params,
       chainId: this.chainId,
@@ -69,7 +72,7 @@ abstract class BaseClient {
     return new URL(path, this.baseURI).toString();
   }
 
-  protected compileRoute(route: string, params: { [key: string]: RouteParamValue }): string {
+  protected compileRoute(route: string, params: RouteParams): string {
     let slug = route;
     for (const key in params) {
       slug = slug.replace(`:${key}`, params[key].toString());
@@ -91,26 +94,19 @@ class AlloIndexerClient extends BaseClient {
   }
 
   getProjects(): Promise<Project[]> {
-    const url = this.buildURL("projects", {});
-    return this.fetchResources(projectBuilder, url);
+    return this.fetchResources("projects", {}, projectBuilder);
   }
 
   getProject(key: keyof Project, value: any): Promise<Project | undefined> {
-    const url = this.buildURL("projects", {});
-    return this.fetchResourceFromList(projectBuilder, url, key, value);
+    return this.fetchResourceFromList("projects", {}, projectBuilder, key, value);
   }
 
   getRounds(): Promise<Round[]> {
-    const url = this.buildURL("rounds", {});
-    return this.fetchResources(roundBuilder, url);
+    return this.fetchResources("rounds", {}, roundBuilder);
   }
 
   getRoundVotes(roundId: string): Promise<Vote[]> {
-    const url = this.buildURL("roundVotes", {
-      roundId,
-    });
-
-    return this.fetchResources(voteBuilder, url);
+    return this.fetchResources("roundVotes", { roundId }, voteBuilder);
   }
 }
 

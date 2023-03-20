@@ -13,12 +13,12 @@ type Round = {
 
 type ResourceBuilder<T> = (obj: any) => T;
 
-const projectBuilder = (obj: any) => ({
+const projectBuilder = (obj: any): Project => ({
   id: obj.id,
   fullId: obj.fullId,
 });
 
-const roundBuilder = (obj: any) => ({
+const roundBuilder = (obj: any): Round => ({
   id: obj.id,
   votesCount: obj.votes,
   applicationsStartTime: new Date(obj.applicationsStartTime * 1000)

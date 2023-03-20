@@ -82,7 +82,7 @@ class AlloIndexerClient {
   fetchResource<T>(builder: ResourceBuilder<T>, url: string): Promise<T> {
     return fetch(url)
       .then(resp => resp.json())
-      .then(obj => builder(obj)));
+      .then(obj => builder(obj));
   }
 
   fetchResources<T>(builder: ResourceBuilder<T>, url: string): Promise<T[]> {

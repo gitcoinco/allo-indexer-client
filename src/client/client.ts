@@ -10,7 +10,7 @@ import {
   Vote,
 } from "./types";
 
-class Client extends BaseClient {
+export class Client extends BaseClient {
   protected routes: { [name: string]: string } = {
     projects: "/data/:chainId/projects.json",
     rounds: "/data/:chainId/rounds.json",
@@ -37,5 +37,3 @@ class Client extends BaseClient {
     return this.fetchResources("roundVotes", { roundId }, voteBuilder);
   }
 }
-
-export default Client;

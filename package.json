@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "description": "A client for the Allo indexer data",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/client/index.js",
+  "types": "dist/client/index.d.ts",
+  "bin": "dist/cli/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "cli": "node --es-module-specifier-resolution=node dist/cli/index.js"
   },
   "author": "",
   "license": "MIT",

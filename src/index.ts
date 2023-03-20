@@ -1,8 +1,8 @@
-type ParamValue = string | number;
+type RouteParamValue = string | number;
 
 type Project = {
-  id: number;
-  fullId: string;
+  id: string;
+  projectNumber: number;
 };
 
 type Round = {
@@ -21,7 +21,7 @@ type ResourceBuilder<T> = (obj: any) => T;
 
 const projectBuilder = (obj: any): Project => ({
   id: obj.id,
-  fullId: obj.fullId,
+  projectNumber: obj.projectNumber,
 });
 
 const roundBuilder = (obj: any): Round => ({

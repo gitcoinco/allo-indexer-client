@@ -1,0 +1,15 @@
+{
+  "name": "allo-indexer-client",
+  "version": "0.1.0",
+  "description": "A client for the Allo indexer data",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  }
+}

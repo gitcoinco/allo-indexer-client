@@ -54,49 +54,50 @@ class AlloIndexerClient {
     this.chainId = chainId;
   }
 
-  projects(): Promise<Project[]> {
-    const url = this.buildURL("projects", {
-      chainId: this.chainId,
-    });
-
+  getProjects(): Promise<Project[]> {
+    const url = this.buildURL("projects", {});
     return this.fetchResources(projectBuilder, url);
   }
 
-  rounds(): Promise<Round[]> {
-    const url = this.buildURL("rounds", {
-      chainId: this.chainId,
-    });
+  getProject(key: keyof Project, value: any): Promise<Project | undefined> {
+    const url = this.buildURL("projects", {});
+    return this.fetchResourceFromList(projectBuilder, url, key, value);
+  }
 
+  getRounds(): Promise<Round[]> {
+    const url = this.buildURL("rounds", {});
     return this.fetchResources(roundBuilder, url);
   }
 
-  roundVotes(roundId: string): Promise<Vote[]> {
+  getRoundVotes(roundId: string): Promise<Vote[]> {
     const url = this.buildURL("roundVotes", {
-      chainId: this.chainId,
       roundId,
     });
 
     return this.fetchResources(voteBuilder, url);
   }
 
-  fetchResource<T>(builder: ResourceBuilder<T>, url: string): Promise<T> {
-    return fetch(url)
-      .then(resp => resp.json())
-      .then(obj => builder(obj));
-  }
-
-  fetchResources<T>(builder: ResourceBuilder<T>, url: string): Promise<T[]> {
+  private fetchResources<T>(builder: ResourceBuilder<T>, url: string): Promise<T[]> {
     return fetch(url)
       .then(resp => resp.json())
       .then(list => list.map((obj: Array<any>) => builder(obj)));
   }
 
-  buildURL(routeName: string, params: { [key: string]: ParamValue }): string {
-    const path = this.compileRoute(this.routes[routeName], params);
+  private fetchResourceFromList<T>(builder: ResourceBuilder<T>, url: string, key: keyof T, value: any): Promise<T | undefined> {
+    return this.fetchResources(builder, url)
+      .then((list: T[]) => list.find((r: T) => r[key] === value));
+  }
+
+  private buildURL(routeName: string, params: { [key: string]: RouteParamValue }): string {
+    const path = this.compileRoute(this.routes[routeName], {
+      ...params,
+      chainId: this.chainId,
+    });
+
     return new URL(path, this.baseURI).toString();
   }
 
-  compileRoute(route: string, params: { [key: string]: ParamValue }): string {
+  private compileRoute(route: string, params: { [key: string]: RouteParamValue }): string {
     let slug = route;
     for (const key in params) {
       slug = slug.replace(`:${key}`, params[key].toString());
@@ -108,8 +109,9 @@ class AlloIndexerClient {
 
 (async () => {
   const c = new AlloIndexerClient(fetch, "http://localhost:4000", 1);
-  // const res = await c.projects();
-  // const res = await c.rounds();
-  const res = await c.roundVotes("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C");
+  // const res = await c.getProjects();
+  const res = await c.getProject("projectNumber", 1);
+  // const res = await c.getRounds();
+  // const res = await c.getRoundVotes("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C");
   console.log(res);
 })()

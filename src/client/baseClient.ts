@@ -35,8 +35,6 @@ abstract class BaseClient {
       chainId: this.chainId,
     });
 
-    console.log(new URL(path, this.baseURI).toString());
-
     return new URL(path, this.baseURI).toString();
   }
 

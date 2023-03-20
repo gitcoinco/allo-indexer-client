@@ -5,6 +5,12 @@ type Project = {
   fullId: string;
 };
 
+type Round = {
+  id: string;
+  votesCount: number;
+  applicationsStartTime: Date;
+};
+
 type ResourceBuilder<T> = (obj: any) => T;
 
 const projectBuilder = (obj: any) => ({
@@ -12,25 +18,42 @@ const projectBuilder = (obj: any) => ({
   fullId: obj.fullId,
 });
 
+const roundBuilder = (obj: any) => ({
+  id: obj.id,
+  votesCount: obj.votes,
+  applicationsStartTime: new Date(obj.applicationsStartTime * 1000)
+});
+
 class AlloIndexerClient {
   public fetch: typeof fetch;
   public baseURI: string;
+  public chainId: number;
 
   public readonly routes: { [name: string]: string } = {
     projects: "/data/:chainId/projects.json",
+    rounds: "/data/:chainId/rounds.json",
   };
 
-  constructor(fetchImpl: typeof fetch, baseURI: string) {
+  constructor(fetchImpl: typeof fetch, baseURI: string, chainId: number) {
     this.fetch = fetchImpl;
     this.baseURI = baseURI;
+    this.chainId = chainId;
   }
 
   projects(): Promise<Project[]> {
     const url = this.buildURL("projects", {
-      chainId: "1",
+      chainId: this.chainId,
     });
 
     return this.fetchList(projectBuilder, url);
+  }
+
+  rounds(): Promise<Round[]> {
+    const url = this.buildURL("rounds", {
+      chainId: this.chainId,
+    });
+
+    return this.fetchList(roundBuilder, url);
   }
 
   fetchList<T>(builder: ResourceBuilder<T>, url: string): Promise<T[]> {
@@ -55,7 +78,8 @@ class AlloIndexerClient {
 }
 
 (async () => {
-  const c = new AlloIndexerClient(fetch, "http://localhost:4000");
-  const ps = await c.projects();
-  console.log(ps);
+  const c = new AlloIndexerClient(fetch, "http://localhost:4000", 1);
+  // const res = await c.projects();
+  const res = await c.rounds();
+  console.log(res);
 })()

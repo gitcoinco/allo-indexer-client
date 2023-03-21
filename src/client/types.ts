@@ -3,6 +3,7 @@ export type ResourceBuilder<T> = (obj: any) => T;
 export type Project = {
   id: string;
   projectNumber: number;
+  title: string;
 };
 
 export type Round = {
@@ -17,7 +18,7 @@ export type Vote = {
   amount: string;
 };
 
-export type Application = Project & {
+export type Application = {
   id: string;
   projectNumber: number;
   roundId: string;

@@ -1,5 +1,5 @@
 import { Client } from "../client";
-import { parseArgs } from "node:util";
+import { parseArgs } from "util";
 
 const baseURI = "https://grants-stack-indexer.fly.dev/";
 const chainId = 1;

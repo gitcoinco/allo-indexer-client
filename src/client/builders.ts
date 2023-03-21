@@ -5,7 +5,7 @@ export const projectBuilder: ResourceBuilder<Project> = (
 ): Project => ({
   id: obj.id,
   projectNumber: obj.projectNumber,
-  title: obj.metadata.title,
+  title: obj.metadata?.title ?? "",
 });
 
 export const roundBuilder: ResourceBuilder<Round> = (obj: any): Round => ({

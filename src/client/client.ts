@@ -1,11 +1,11 @@
-import BaseClient from "./baseClient";
+import BaseClient from "./baseClient.js";
 import {
   projectBuilder,
   roundBuilder,
   voteBuilder,
   roundApplicationBuilder,
-} from "./builders";
-import { Project, Round, Vote, Application } from "./types";
+} from "./builders.js";
+import { Project, Round, Vote, Application } from "./types.js";
 
 export class Client extends BaseClient {
   protected routes: { [name: string]: string } = {

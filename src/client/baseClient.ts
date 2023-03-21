@@ -1,4 +1,4 @@
-import { ResourceBuilder } from "./types";
+import { ResourceBuilder } from "./types.js";
 
 type RouteParams = {
   [key: string]: string | number;

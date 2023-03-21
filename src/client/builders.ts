@@ -1,4 +1,4 @@
-import { ResourceBuilder, Project, Round, Application, Vote } from "./types";
+import { ResourceBuilder, Project, Round, Application, Vote } from "./types.js";
 
 export const projectBuilder: ResourceBuilder<Project> = (
   obj: any

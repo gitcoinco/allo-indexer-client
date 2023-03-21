@@ -5,12 +5,7 @@ import {
   voteBuilder,
   roundApplicationBuilder,
 } from "./builders";
-import {
-  Project,
-  Round,
-  Vote,
-  Application,
-} from "./types";
+import { Project, Round, Vote, Application } from "./types";
 
 export class Client extends BaseClient {
   protected routes: { [name: string]: string } = {
@@ -29,7 +24,13 @@ export class Client extends BaseClient {
   }
 
   getProjectBy(key: keyof Project, value: any): Promise<Project | undefined> {
-    return this.fetchResourceFromList("projects", {}, projectBuilder, key, value);
+    return this.fetchResourceFromList(
+      "projects",
+      {},
+      projectBuilder,
+      key,
+      value
+    );
   }
 
   getRounds(): Promise<Round[]> {
@@ -45,10 +46,24 @@ export class Client extends BaseClient {
   }
 
   getRoundApplications(roundId: string): Promise<Application[]> {
-    return this.fetchResources("roundApplications", { roundId }, roundApplicationBuilder);
+    return this.fetchResources(
+      "roundApplications",
+      { roundId },
+      roundApplicationBuilder
+    );
   }
 
-  getRoundApplicationBy(roundId: string, key: keyof Application, value: any): Promise<Application | undefined> {
-    return this.fetchResourceFromList("roundApplications", { roundId }, roundApplicationBuilder, key, value);
+  getRoundApplicationBy(
+    roundId: string,
+    key: keyof Application,
+    value: any
+  ): Promise<Application | undefined> {
+    return this.fetchResourceFromList(
+      "roundApplications",
+      { roundId },
+      roundApplicationBuilder,
+      key,
+      value
+    );
   }
 }

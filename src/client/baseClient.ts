@@ -2,7 +2,7 @@ import { ResourceBuilder } from "./types";
 
 type RouteParams = {
   [key: string]: string | number;
-}
+};
 
 abstract class BaseClient {
   public fetch: typeof fetch;
@@ -17,16 +17,27 @@ abstract class BaseClient {
     this.chainId = chainId;
   }
 
-  protected fetchResources<T>(routeName: string, params: RouteParams, builder: ResourceBuilder<T>): Promise<T[]> {
+  protected fetchResources<T>(
+    routeName: string,
+    params: RouteParams,
+    builder: ResourceBuilder<T>
+  ): Promise<T[]> {
     const url = this.buildURL(routeName, params);
     return fetch(url)
-      .then(resp => resp.json())
-      .then(list => list.map((obj: Array<any>) => builder(obj)));
+      .then((resp) => resp.json())
+      .then((list) => list.map((obj: Array<any>) => builder(obj)));
   }
 
-  protected fetchResourceFromList<T>(routeName: string, params: RouteParams, builder: ResourceBuilder<T>, key: keyof T, value: any): Promise<T | undefined> {
-    return this.fetchResources(routeName, params, builder)
-      .then((list: T[]) => list.find((r: T) => r[key] === value));
+  protected fetchResourceFromList<T>(
+    routeName: string,
+    params: RouteParams,
+    builder: ResourceBuilder<T>,
+    key: keyof T,
+    value: any
+  ): Promise<T | undefined> {
+    return this.fetchResources(routeName, params, builder).then((list: T[]) =>
+      list.find((r: T) => r[key] === value)
+    );
   }
 
   protected buildURL(routeName: string, params: RouteParams): string {

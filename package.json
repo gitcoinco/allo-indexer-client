@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "dev": "tsc --watch",
-    "cli": "node --es-module-specifier-resolution=node --no-warnings  dist/cli/index.js"
+    "cli": "node --es-module-specifier-resolution=node --no-warnings  dist/cli/index.js",
+    "postinstall": "tsc"
   },
   "author": "",
   "license": "MIT",

@@ -11,14 +11,17 @@ npm install git+https://github.com/gitcoinco/allo-indexer-client.git
 ## Example
 
 ```javascript
-const { Client } = require("allo-indexer-client/client");
+import { Client } from "allo-indexer-client";
 
 const baseURI = "https://grants-stack-indexer.fly.dev/";
 const chainId = 1;
 const fetchImplementation = fetch;
 const client = new Client(fetchImplementation, baseURI, chainId);
 
-const projects = await client.getProjects();
+(async () => {
+  const projects = await client.getProjects();
+  console.log(projects);
+})();
 ```
 
 ### Cli

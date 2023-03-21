@@ -11,7 +11,7 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "cli": "node --es-module-specifier-resolution=node --no-warnings  dist/cli/index.js",
-    "postinstall": "tsc"
+    "postinstall": "npm run build"
   },
   "author": "",
   "license": "MIT",

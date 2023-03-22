@@ -20,19 +20,17 @@ const logError = (err: Error) => {
   }
 };
 
-const projectsCommand = async (_args: { [key: string]: string }) => {
+const projectsCommand = async (_args: { [key: string]: string }) =>
   client
     .getProjects()
     .then((projects) => projects.forEach((p) => console.log(p)))
     .catch(logError);
-};
 
-const projectCommand = async (args: { [key: string]: string }) => {
+const projectCommand = async (args: { [key: string]: string }) =>
   client
     .getProjectBy("projectNumber", Number(args.projectNumber))
     .then((project) => console.log(project))
     .catch(logError);
-};
 
 const commands: any = {
   projects: {
@@ -65,7 +63,7 @@ const { values } = parseArgs({
   options: cmd.options,
 });
 
-cmd.handler(values);
+await cmd.handler(values);
 
 // (async () => {
 //   // const c = new Client(fetch, "http://localhost:4000", 1);

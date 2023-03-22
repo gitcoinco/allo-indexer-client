@@ -7,7 +7,8 @@
   "types": "dist/client/index.d.ts",
   "bin": "dist/cli/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "build": "tsc",
     "dev": "tsc --watch",
     "cli": "node --es-module-specifier-resolution=node --no-warnings  dist/cli/index.js",
@@ -17,5 +18,12 @@
   "license": "MIT",
   "dependencies": {
     "@types/node": "^18.15.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.0.5",
+    "ts-jest-resolver": "^2.0.1",
+    "typescript": "^5.0.2"
   }
 }

@@ -24,7 +24,7 @@ abstract class BaseClient {
     builder: ResourceBuilder<T>
   ): Promise<T[]> {
     const url = this.buildURL(routeName, params);
-    return fetch(url)
+    return this.fetch(url)
       .then((resp) => {
         if (!resp.ok) {
           throw new ResourceFetchError(

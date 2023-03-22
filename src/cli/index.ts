@@ -1,22 +1,36 @@
-import { Client } from "../client";
+import { Client, ResourceFetchError } from "../client";
 import { parseArgs } from "util";
 
 const baseURI = "https://grants-stack-indexer.fly.dev/";
 const chainId = 1;
 const client = new Client(fetch, baseURI, chainId);
 
-const projectsCommand = async (_args: { [key: string]: string }) => {
-  const projects = await client.getProjects();
-  projects.forEach((p) => console.log(p));
+const logError = (err: Error) => {
+  switch (err.name) {
+    case "ResourceFetchError":
+      const e = err as ResourceFetchError;
+      console.error(
+        "resource fetch error:",
+        `${e.status} - ${e.statusText}.`,
+        err.message
+      );
+      break;
+    default:
+      console.error("unexpected error:", err.name, err.message);
+  }
 };
 
-const projectCommand = async (args: { [key: string]: string }) => {
-  const project = await client.getProjectBy(
-    "projectNumber",
-    Number(args.projectNumber)
-  );
-  console.log(project);
-};
+const projectsCommand = (_args: { [key: string]: string }) =>
+  client
+    .getProjects()
+    .then((projects) => projects.forEach((p) => console.log(p)))
+    .catch(logError);
+
+const projectCommand = (args: { [key: string]: string }) =>
+  client
+    .getProjectBy("projectNumber", Number(args.projectNumber))
+    .then((project) => console.log(project))
+    .catch(logError);
 
 const commands: any = {
   projects: {
@@ -49,7 +63,7 @@ const { values } = parseArgs({
   options: cmd.options,
 });
 
-cmd.handler(values);
+await cmd.handler(values);
 
 // (async () => {
 //   // const c = new Client(fetch, "http://localhost:4000", 1);

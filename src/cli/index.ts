@@ -20,13 +20,13 @@ const logError = (err: Error) => {
   }
 };
 
-const projectsCommand = async (_args: { [key: string]: string }) =>
+const projectsCommand = (_args: { [key: string]: string }) =>
   client
     .getProjects()
     .then((projects) => projects.forEach((p) => console.log(p)))
     .catch(logError);
 
-const projectCommand = async (args: { [key: string]: string }) =>
+const projectCommand = (args: { [key: string]: string }) =>
   client
     .getProjectBy("projectNumber", Number(args.projectNumber))
     .then((project) => console.log(project))

@@ -8,7 +8,9 @@ export type Project = {
 
 export type Round = {
   id: string;
-  votesCount: number;
+  votes: number;
+  uniqueContributors: number;
+  amountUSD: number;
   applicationsStartTime: Date;
 };
 

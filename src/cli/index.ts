@@ -26,6 +26,12 @@ const projectsCommand = (_args: { [key: string]: string }) =>
     .then((projects) => projects.forEach((p) => console.log(p)))
     .catch(logError);
 
+const roundsCommand = (_args: { [key: string]: string }) =>
+  client
+    .getRounds()
+    .then((rounds) => rounds.forEach((r) => console.log(r)))
+    .catch(logError);
+
 const projectCommand = (args: { [key: string]: string }) =>
   client
     .getProjectBy("projectNumber", Number(args.projectNumber))
@@ -36,6 +42,11 @@ const commands: any = {
   projects: {
     options: {},
     handler: projectsCommand,
+  },
+
+  rounds: {
+    options: {},
+    handler: roundsCommand,
   },
 
   project: {

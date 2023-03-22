@@ -10,7 +10,9 @@ export const projectBuilder: ResourceBuilder<Project> = (
 
 export const roundBuilder: ResourceBuilder<Round> = (obj: any): Round => ({
   id: obj.id,
-  votesCount: obj.votes,
+  votes: obj.votes,
+  uniqueContributors: obj.uniqueContributors,
+  amountUSD: obj.amountUSD,
   applicationsStartTime: new Date(obj.applicationsStartTime * 1000),
 });
 

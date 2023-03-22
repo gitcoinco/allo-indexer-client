@@ -1,4 +1,5 @@
 import { ResourceBuilder } from "./types.js";
+import { ResourceFetchError } from "./errors.js";
 
 type RouteParams = {
   [key: string]: string | number;
@@ -17,18 +18,28 @@ abstract class BaseClient {
     this.chainId = chainId;
   }
 
-  protected fetchResources<T>(
+  protected async fetchResources<T>(
     routeName: string,
     params: RouteParams,
     builder: ResourceBuilder<T>
   ): Promise<T[]> {
     const url = this.buildURL(routeName, params);
     return fetch(url)
-      .then((resp) => resp.json())
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new ResourceFetchError(
+            resp.status,
+            resp.statusText,
+            `cannot fetch resource at route "${routeName}"`
+          );
+        }
+
+        return resp.json();
+      })
       .then((list) => list.map((obj: Array<any>) => builder(obj)));
   }
 
-  protected fetchResourceFromList<T>(
+  protected async fetchResourceFromList<T>(
     routeName: string,
     params: RouteParams,
     builder: ResourceBuilder<T>,

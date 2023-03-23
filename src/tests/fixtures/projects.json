@@ -1,0 +1,28 @@
+[
+  {
+    "id": "0x00000000000000000000000000000000000000000000000000000000000001",
+    "projectNumber": 1,
+    "metaPtr": "meta-ptr-1",
+    "owners": [
+      "0x0000000000000000000000000000000000000001"
+    ],
+    "metadata": {
+      "title": "Project 1",
+      "description": "Project 1 description",
+      "website": "https://project-1.local"
+    }
+  },
+  {
+    "id": "0x00000000000000000000000000000000000000000000000000000000000002",
+    "projectNumber": 2,
+    "metaPtr": "meta-ptr-2",
+    "owners": [
+      "0x0000000000000000000000000000000000000002"
+    ],
+    "metadata": {
+      "title": "Project 2",
+      "description": "Project 2 description",
+      "website": "https://project-2.local"
+    }
+  }
+]

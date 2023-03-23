@@ -26,12 +26,12 @@ describe("Client", () => {
 
       const expectedProjects = [
         {
-          id: "0x00000000000000000000000000000000000000000000000000000000000001",
+          id: "0xA0000000000000000000000000000000000000000000000000000000000001",
           projectNumber: 1,
           title: "Project 1",
         },
         {
-          id: "0x00000000000000000000000000000000000000000000000000000000000002",
+          id: "0xA0000000000000000000000000000000000000000000000000000000000002",
           projectNumber: 2,
           title: "Project 2",
         },
@@ -45,6 +45,80 @@ describe("Client", () => {
       await expect(c.getProjects()).rejects.toThrow(
         `cannot fetch resource at route "projects"`
       );
+    });
+  });
+
+  describe("getProjectBy", () => {
+    test("returns project by id", async () => {
+      const c = new Client(mockFetch(200, "projects"), baseDataURI, chainId);
+      const project = await c.getProjectById(
+        "0xA0000000000000000000000000000000000000000000000000000000000001"
+      );
+
+      const expectedProject = {
+        id: "0xA0000000000000000000000000000000000000000000000000000000000001",
+        projectNumber: 1,
+        title: "Project 1",
+      };
+
+      expect(project).toEqual(expectedProject);
+    });
+
+    test("returns undefined with bad case sensitive value", async () => {
+      const c = new Client(mockFetch(200, "projects"), baseDataURI, chainId);
+      const project = await c.getProjectBy(
+        "id",
+        "0xa0000000000000000000000000000000000000000000000000000000000001"
+      );
+
+      expect(project).toEqual(undefined);
+    });
+
+    test("returns project by id case insensitive", async () => {
+      const c = new Client(mockFetch(200, "projects"), baseDataURI, chainId);
+      const project = await c.getProjectById(
+        "0xa0000000000000000000000000000000000000000000000000000000000001"
+      );
+
+      const expectedProject = {
+        id: "0xA0000000000000000000000000000000000000000000000000000000000001",
+        projectNumber: 1,
+        title: "Project 1",
+      };
+
+      expect(project).toEqual(expectedProject);
+    });
+  });
+
+  describe("getProjectById", () => {
+    test("returns project by id", async () => {
+      const c = new Client(mockFetch(200, "projects"), baseDataURI, chainId);
+      const project = await c.getProjectById(
+        "0xA0000000000000000000000000000000000000000000000000000000000001"
+      );
+
+      const expectedProject = {
+        id: "0xA0000000000000000000000000000000000000000000000000000000000001",
+        projectNumber: 1,
+        title: "Project 1",
+      };
+
+      expect(project).toEqual(expectedProject);
+    });
+
+    test("returns project by id case insensitive", async () => {
+      const c = new Client(mockFetch(200, "projects"), baseDataURI, chainId);
+      const project = await c.getProjectById(
+        "0xa0000000000000000000000000000000000000000000000000000000000001"
+      );
+
+      const expectedProject = {
+        id: "0xA0000000000000000000000000000000000000000000000000000000000001",
+        projectNumber: 1,
+        title: "Project 1",
+      };
+
+      expect(project).toEqual(expectedProject);
     });
   });
 });

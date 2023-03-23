@@ -12,6 +12,7 @@ abstract class BaseClient {
 
   protected abstract routes: { [name: string]: string };
 
+  /** MAKE SURE TO DO fetch.bind(window) WHEN PASSING IN FETCH IMPLEMENTATION */
   constructor(fetchImpl: typeof fetch, baseURI: string, chainId: number) {
     this.fetch = fetchImpl;
     this.baseURI = baseURI;

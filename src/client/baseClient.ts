@@ -45,11 +45,21 @@ abstract class BaseClient {
     params: RouteParams,
     builder: ResourceBuilder<T>,
     key: keyof T,
-    value: any
+    value: any,
+    caseSensitive: boolean = false
   ): Promise<T | undefined> {
-    return this.fetchResources(routeName, params, builder).then((list: T[]) =>
-      list.find((r: T) => r[key] === value)
-    );
+    return this.fetchResources(routeName, params, builder).then((list: T[]) => {
+      let f = (r: T) => {
+        const actualValue = r[key];
+        if (caseSensitive && typeof actualValue === "string") {
+          return actualValue.toLowerCase() === value.toLowerCase();
+        }
+
+        return r[key] === value;
+      };
+
+      return list.find(f);
+    });
   }
 
   protected buildURL(routeName: string, params: RouteParams): string {

@@ -33,12 +33,34 @@ export class Client extends BaseClient {
     );
   }
 
+  getProjectById(id: string): Promise<Project | undefined> {
+    return this.fetchResourceFromList(
+      "projects",
+      {},
+      projectBuilder,
+      "id",
+      id,
+      true
+    );
+  }
+
   getRounds(): Promise<Round[]> {
     return this.fetchResources("rounds", {}, roundBuilder);
   }
 
-  getRoundBy(key: keyof Round, value: any): Promise<Round | undefined> {
-    return this.fetchResourceFromList("rounds", {}, roundBuilder, key, value);
+  getRoundBy(
+    key: keyof Round,
+    value: any,
+    caseSensitive: boolean = false
+  ): Promise<Round | undefined> {
+    return this.fetchResourceFromList(
+      "rounds",
+      {},
+      roundBuilder,
+      key,
+      value,
+      caseSensitive
+    );
   }
 
   getRoundVotes(roundId: string): Promise<Vote[]> {

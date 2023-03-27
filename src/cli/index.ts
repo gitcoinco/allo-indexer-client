@@ -106,6 +106,7 @@ await cmd.handler(values);
 //   // const res = await c.getRoundBy("id", "0x8E420122dE3B3792ABcc69921433a48868bcfAc2");
 //   // const res = await c.getRoundApplications("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C");
 //   const res = await c.getRoundApplicationBy("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C", "id", "0xc290dd8e51ac35480d9872ce4484aac23bb812c47c0567bfd4beb9113726ed11");
-//   // const res = await c.getVotesBy("0xe575282b376E3c9886779A841A2510F1Dd8C2CE4");
+//   // const res = await c.getVotes("0xe575282b376E3c9886779A841A2510F1Dd8C2CE4");
+//   // const res = await c.getVotes("0xe575282b376E3c9886779A841A2510F1Dd8C2CE4"), "0xA0000000000000000000000000000000000000000000000000000000000001"); 
 //   console.log(res);
 // })()

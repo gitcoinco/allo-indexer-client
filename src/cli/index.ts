@@ -32,11 +32,18 @@ const roundsCommand = (_args: { [key: string]: string }) =>
     .then((rounds) => rounds.forEach((r) => console.log(r)))
     .catch(logError);
 
-const projectCommand = (args: { [key: string]: string }) =>
+const projectCommand = (_args: { [key: string]: string }) =>
   client
-    .getProjectBy("projectNumber", Number(args.projectNumber))
+    .getProjectBy("projectNumber", Number(_args.projectNumber))
     .then((project) => console.log(project))
     .catch(logError);
+
+const votesCommand = (_args: { [key: string]: string }) =>
+  client
+    .getVotes(_args.roundId, _args.projectId)
+    .then((votes) => votes.forEach((v) => console.log(v)))
+    .catch(logError);
+
 
 const commands: any = {
   projects: {
@@ -58,6 +65,20 @@ const commands: any = {
     },
     handler: projectCommand,
   },
+
+  votes: {
+    options: {
+      roundId: {
+        type: "string",
+        short: "r",
+      },
+      projectId: {
+        type: "string",
+        short: "p",
+      },
+    },
+    handler: votesCommand,
+  }
 };
 
 const cmdName = process.argv[2];
@@ -85,6 +106,6 @@ await cmd.handler(values);
 //   // const res = await c.getRoundBy("id", "0x8E420122dE3B3792ABcc69921433a48868bcfAc2");
 //   // const res = await c.getRoundApplications("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C");
 //   const res = await c.getRoundApplicationBy("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C", "id", "0xc290dd8e51ac35480d9872ce4484aac23bb812c47c0567bfd4beb9113726ed11");
-//   // const res = await c.getRoundVotes("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C");
+//   // const res = await c.getVotesBy("0xe575282b376E3c9886779A841A2510F1Dd8C2CE4");
 //   console.log(res);
 // })()

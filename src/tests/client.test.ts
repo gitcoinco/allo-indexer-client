@@ -38,7 +38,8 @@ describe("Client", () => {
         {
           id: "0xA0000000000000000000000000000000000000000000000000000000000003",
           projectNumber: 2,
-          title: "Project 3 (same projectNumber from another registry, so the id is different)",
+          title:
+            "Project 3 (same projectNumber from another registry, so the id is different)",
         },
       ];
 
@@ -98,20 +99,23 @@ describe("Client", () => {
   describe("getProjectsBy", () => {
     test("returns a list of projects by projectNumber", async () => {
       const c = new Client(mockFetch(200, "projects"), baseDataURI, chainId);
-      const projects = await c.getProjectsBy(
-        "projectNumber",
-        2
-      );
+      const projects = await c.getProjectsBy("projectNumber", 2);
 
       expect(projects.length).toEqual(2);
 
-      expect(projects[0].id).toEqual("0xA0000000000000000000000000000000000000000000000000000000000002");
+      expect(projects[0].id).toEqual(
+        "0xA0000000000000000000000000000000000000000000000000000000000002"
+      );
       expect(projects[0].projectNumber).toEqual(2);
       expect(projects[0].title).toEqual("Project 2");
 
-      expect(projects[1].id).toEqual("0xA0000000000000000000000000000000000000000000000000000000000003");
+      expect(projects[1].id).toEqual(
+        "0xA0000000000000000000000000000000000000000000000000000000000003"
+      );
       expect(projects[1].projectNumber).toEqual(2);
-      expect(projects[1].title).toEqual("Project 3 (same projectNumber from another registry, so the id is different)");
+      expect(projects[1].title).toEqual(
+        "Project 3 (same projectNumber from another registry, so the id is different)"
+      );
     });
   });
 

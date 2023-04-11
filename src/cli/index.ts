@@ -1,6 +1,26 @@
 import { Client, ResourceFetchError } from "../client";
 import { parseArgs } from "util";
 
+type CommandHandlerArgs = { [arg: string]: string | boolean | undefined };
+
+type CommandHandlerWithArgs = (
+  args: CommandHandlerArgs
+  // eslint-disable-next-line
+) => Promise<any>;
+// eslint-disable-next-line
+type CommandHandlerWithoutArgs = () => Promise<any>;
+type CommandHandler = CommandHandlerWithArgs | CommandHandlerWithoutArgs;
+
+type Command = {
+  options: {
+    [key: string]: {
+      type: "string" | "boolean";
+      short: string;
+    };
+  };
+  handler: CommandHandler;
+};
+
 const baseURI = "https://grants-stack-indexer.fly.dev/";
 const chainId = 1;
 const client = new Client(fetch, baseURI, chainId);
@@ -34,29 +54,11 @@ const roundsCommand = () =>
     .then((rounds) => rounds.forEach((r) => console.log(r)))
     .catch(logError);
 
-const projectCommand = (args: { [key: string]: string }) =>
+const projectCommand = (args: CommandHandlerArgs) =>
   client
     .getProjectBy("projectNumber", Number(args.projectNumber))
     .then((project) => console.log(project))
     .catch(logError);
-
-type CommandHandlerWithArgs = (args: {
-  [arg: string]: string | number;
-  // eslint-disable-next-line
-}) => Promise<any>;
-// eslint-disable-next-line
-type CommandHandlerWithoutArgs = () => Promise<any>;
-type CommandHandler = CommandHandlerWithArgs | CommandHandlerWithoutArgs;
-
-type Command = {
-  options: {
-    [key: string]: {
-      type: string;
-      short: string;
-    };
-  };
-  handler: CommandHandler;
-};
 
 const commands: { [name: string]: Command } = {
   projects: {
@@ -95,16 +97,3 @@ const { values } = parseArgs({
 });
 
 await cmd.handler(values);
-
-// (async () => {
-//   // const c = new Client(fetch, "http://localhost:4000", 1);
-//   const c = new Client(fetch, "https://grants-stack-indexer.fly.dev/", 1);
-//   // const res = await c.getProjects();
-//   // const res = await c.getProjectBy("projectNumber", 1);
-//   // const res = await c.getRounds();
-//   // const res = await c.getRoundBy("id", "0x8E420122dE3B3792ABcc69921433a48868bcfAc2");
-//   // const res = await c.getRoundApplications("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C");
-//   const res = await c.getRoundApplicationBy("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C", "id", "0xc290dd8e51ac35480d9872ce4484aac23bb812c47c0567bfd4beb9113726ed11");
-//   // const res = await c.getRoundVotes("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C");
-//   console.log(res);
-// })()

@@ -1,4 +1,9 @@
-export type ResourceBuilder<T> = (obj: any) => T;
+export type RawObject = {
+  // eslint-disable-next-line
+  [key: string]: any;
+};
+
+export type ResourceBuilder<T> = (obj: RawObject) => T;
 
 export type Project = {
   id: string;

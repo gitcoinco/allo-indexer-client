@@ -1,4 +1,4 @@
-import { ResourceBuilder } from "./types.js";
+import { RawObject, ResourceBuilder } from "./types.js";
 import { ResourceFetchError } from "./errors.js";
 
 type RouteParams = {
@@ -37,7 +37,7 @@ abstract class BaseClient {
 
         return resp.json();
       })
-      .then((list) => list.map((obj: Array<any>) => builder(obj)));
+      .then((list) => list.map((obj: Array<RawObject>) => builder(obj)));
   }
 
   protected async fetchResourcesFromList<T>(
@@ -45,14 +45,14 @@ abstract class BaseClient {
     params: RouteParams,
     builder: ResourceBuilder<T>,
     key: keyof T,
-    value: any,
-    caseSensitive: boolean = false
+    value: string | number,
+    caseSensitive = false
   ): Promise<T[]> {
     return this.fetchResources(routeName, params, builder).then((list: T[]) => {
-      let f = (r: T) => {
+      const f = (r: T) => {
         const actualValue = r[key];
         if (caseSensitive && typeof actualValue === "string") {
-          return actualValue.toLowerCase() === value.toLowerCase();
+          return actualValue.toLowerCase() === value.toString().toLowerCase();
         }
 
         return actualValue === value;
@@ -67,10 +67,17 @@ abstract class BaseClient {
     params: RouteParams,
     builder: ResourceBuilder<T>,
     key: keyof T,
-    value: any,
-    caseSensitive: boolean = false
+    value: string | number,
+    caseSensitive = false
   ): Promise<T | undefined> {
-    return this.fetchResourcesFromList(routeName, params, builder, key, value, caseSensitive).then((list: T[]) => {
+    return this.fetchResourcesFromList(
+      routeName,
+      params,
+      builder,
+      key,
+      value,
+      caseSensitive
+    ).then((list: T[]) => {
       return list[0];
     });
   }

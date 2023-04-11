@@ -22,13 +22,13 @@ const logError = (err: Error) => {
   }
 };
 
-const projectsCommand = (_args: { [key: string]: string }) =>
+const projectsCommand = () =>
   client
     .getProjects()
     .then((projects) => projects.forEach((p) => console.log(p)))
     .catch(logError);
 
-const roundsCommand = (_args: { [key: string]: string }) =>
+const roundsCommand = () =>
   client
     .getRounds()
     .then((rounds) => rounds.forEach((r) => console.log(r)))
@@ -40,7 +40,25 @@ const projectCommand = (args: { [key: string]: string }) =>
     .then((project) => console.log(project))
     .catch(logError);
 
-const commands: any = {
+type CommandHandlerWithArgs = (args: {
+  [arg: string]: string | number;
+  // eslint-disable-next-line
+}) => Promise<any>;
+// eslint-disable-next-line
+type CommandHandlerWithoutArgs = () => Promise<any>;
+type CommandHandler = CommandHandlerWithArgs | CommandHandlerWithoutArgs;
+
+type Command = {
+  options: {
+    [key: string]: {
+      type: string;
+      short: string;
+    };
+  };
+  handler: CommandHandler;
+};
+
+const commands: { [name: string]: Command } = {
   projects: {
     options: {},
     handler: projectsCommand,

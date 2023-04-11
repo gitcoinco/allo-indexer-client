@@ -1,13 +1,33 @@
 import { Client, ResourceFetchError } from "../client";
 import { parseArgs } from "util";
 
+type CommandHandlerArgs = { [arg: string]: string | boolean | undefined };
+
+type CommandHandlerWithArgs = (
+  args: CommandHandlerArgs
+  // eslint-disable-next-line
+) => Promise<any>;
+// eslint-disable-next-line
+type CommandHandlerWithoutArgs = () => Promise<any>;
+type CommandHandler = CommandHandlerWithArgs | CommandHandlerWithoutArgs;
+
+type Command = {
+  options: {
+    [key: string]: {
+      type: "string" | "boolean";
+      short: string;
+    };
+  };
+  handler: CommandHandler;
+};
+
 const baseURI = "https://grants-stack-indexer.fly.dev/";
 const chainId = 1;
 const client = new Client(fetch, baseURI, chainId);
 
 const logError = (err: Error) => {
   switch (err.name) {
-    case "ResourceFetchError":
+    case "ResourceFetchError": {
       const e = err as ResourceFetchError;
       console.error(
         "resource fetch error:",
@@ -15,30 +35,32 @@ const logError = (err: Error) => {
         err.message
       );
       break;
+    }
+
     default:
       console.error("unexpected error:", err.name, err.message);
   }
 };
 
-const projectsCommand = (_args: { [key: string]: string }) =>
+const projectsCommand = () =>
   client
     .getProjects()
     .then((projects) => projects.forEach((p) => console.log(p)))
     .catch(logError);
 
-const roundsCommand = (_args: { [key: string]: string }) =>
+const roundsCommand = () =>
   client
     .getRounds()
     .then((rounds) => rounds.forEach((r) => console.log(r)))
     .catch(logError);
 
-const projectCommand = (args: { [key: string]: string }) =>
+const projectCommand = (args: CommandHandlerArgs) =>
   client
     .getProjectBy("projectNumber", Number(args.projectNumber))
     .then((project) => console.log(project))
     .catch(logError);
 
-const commands: any = {
+const commands: { [name: string]: Command } = {
   projects: {
     options: {},
     handler: projectsCommand,
@@ -75,16 +97,3 @@ const { values } = parseArgs({
 });
 
 await cmd.handler(values);
-
-// (async () => {
-//   // const c = new Client(fetch, "http://localhost:4000", 1);
-//   const c = new Client(fetch, "https://grants-stack-indexer.fly.dev/", 1);
-//   // const res = await c.getProjects();
-//   // const res = await c.getProjectBy("projectNumber", 1);
-//   // const res = await c.getRounds();
-//   // const res = await c.getRoundBy("id", "0x8E420122dE3B3792ABcc69921433a48868bcfAc2");
-//   // const res = await c.getRoundApplications("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C");
-//   const res = await c.getRoundApplicationBy("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C", "id", "0xc290dd8e51ac35480d9872ce4484aac23bb812c47c0567bfd4beb9113726ed11");
-//   // const res = await c.getRoundVotes("0xD95A1969c41112cEE9A2c931E849bCef36a16F4C");
-//   console.log(res);
-// })()

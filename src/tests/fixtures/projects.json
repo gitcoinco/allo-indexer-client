@@ -24,5 +24,18 @@
       "description": "Project 2 description",
       "website": "https://project-2.local"
     }
+  },
+  {
+    "id": "0xA0000000000000000000000000000000000000000000000000000000000003",
+    "projectNumber": 2,
+    "metaPtr": "meta-ptr-3",
+    "owners": [
+      "0x0000000000000000000000000000000000000003"
+    ],
+    "metadata": {
+      "title": "Project 3 (same projectNumber from another registry, so the id is different)",
+      "description": "Project 3 description",
+      "website": "https://project-3.local"
+    }
   }
 ]

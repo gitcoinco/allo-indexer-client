@@ -23,8 +23,24 @@ export class Client extends BaseClient {
     return this.fetchResources("projects", {}, projectBuilder);
   }
 
-  getProjectBy(key: keyof Project, value: any): Promise<Project | undefined> {
+  getProjectBy(
+    key: keyof Project,
+    value: string | number
+  ): Promise<Project | undefined> {
     return this.fetchResourceFromList(
+      "projects",
+      {},
+      projectBuilder,
+      key,
+      value
+    );
+  }
+
+  getProjectsBy(
+    key: keyof Project,
+    value: string | number
+  ): Promise<Project[]> {
+    return this.fetchResourcesFromList(
       "projects",
       {},
       projectBuilder,
@@ -50,8 +66,8 @@ export class Client extends BaseClient {
 
   getRoundBy(
     key: keyof Round,
-    value: any,
-    caseSensitive: boolean = false
+    value: string | number,
+    caseSensitive = false
   ): Promise<Round | undefined> {
     return this.fetchResourceFromList(
       "rounds",
@@ -78,7 +94,7 @@ export class Client extends BaseClient {
   getRoundApplicationBy(
     roundId: string,
     key: keyof Application,
-    value: any
+    value: string | number
   ): Promise<Application | undefined> {
     return this.fetchResourceFromList(
       "roundApplications",

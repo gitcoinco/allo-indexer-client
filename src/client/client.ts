@@ -33,6 +33,16 @@ export class Client extends BaseClient {
     );
   }
 
+  getProjectsBy(key: keyof Project, value: any): Promise<Project[]> {
+    return this.fetchResourcesFromList(
+      "projects",
+      {},
+      projectBuilder,
+      key,
+      value
+    );
+  }
+
   getProjectById(id: string): Promise<Project | undefined> {
     return this.fetchResourceFromList(
       "projects",

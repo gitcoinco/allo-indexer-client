@@ -40,6 +40,28 @@ abstract class BaseClient {
       .then((list) => list.map((obj: Array<any>) => builder(obj)));
   }
 
+  protected async fetchResourcesFromList<T>(
+    routeName: string,
+    params: RouteParams,
+    builder: ResourceBuilder<T>,
+    key: keyof T,
+    value: any,
+    caseSensitive: boolean = false
+  ): Promise<T[]> {
+    return this.fetchResources(routeName, params, builder).then((list: T[]) => {
+      let f = (r: T) => {
+        const actualValue = r[key];
+        if (caseSensitive && typeof actualValue === "string") {
+          return actualValue.toLowerCase() === value.toLowerCase();
+        }
+
+        return actualValue === value;
+      };
+
+      return list.filter(f);
+    });
+  }
+
   protected async fetchResourceFromList<T>(
     routeName: string,
     params: RouteParams,
@@ -48,17 +70,8 @@ abstract class BaseClient {
     value: any,
     caseSensitive: boolean = false
   ): Promise<T | undefined> {
-    return this.fetchResources(routeName, params, builder).then((list: T[]) => {
-      let f = (r: T) => {
-        const actualValue = r[key];
-        if (caseSensitive && typeof actualValue === "string") {
-          return actualValue.toLowerCase() === value.toLowerCase();
-        }
-
-        return r[key] === value;
-      };
-
-      return list.find(f);
+    return this.fetchResourcesFromList(routeName, params, builder, key, value, caseSensitive).then((list: T[]) => {
+      return list[0];
     });
   }
 

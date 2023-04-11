@@ -7,7 +7,7 @@ const client = new Client(fetch, baseURI, chainId);
 
 const logError = (err: Error) => {
   switch (err.name) {
-    case "ResourceFetchError":
+    case "ResourceFetchError": {
       const e = err as ResourceFetchError;
       console.error(
         "resource fetch error:",
@@ -15,6 +15,8 @@ const logError = (err: Error) => {
         err.message
       );
       break;
+    }
+
     default:
       console.error("unexpected error:", err.name, err.message);
   }

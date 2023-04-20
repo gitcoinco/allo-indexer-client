@@ -16,7 +16,7 @@ export type Round = {
   votes: number;
   uniqueContributors: number;
   matchAmount: string;
-  matchAmountUSD: string;
+  matchAmountUSD: number;
   amountUSD: number;
   applicationsStartTime: Date;
 };

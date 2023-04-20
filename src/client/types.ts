@@ -15,6 +15,8 @@ export type Round = {
   id: string;
   votes: number;
   uniqueContributors: number;
+  matchAmount: string;
+  matchAmountUSD: string;
   amountUSD: number;
   applicationsStartTime: Date;
 };
@@ -45,6 +47,9 @@ export type Match = {
   totalReceived: number;
   sumOfSqrt: number;
   matched: number;
+  contributorsCount: number;
+  projectId: string;
+  applicationId: string;
   projectName: string;
   payoutAddress: string;
 };

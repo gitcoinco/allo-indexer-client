@@ -47,7 +47,7 @@ export type Match = {
   totalReceived: number;
   sumOfSqrt: number;
   matched: number;
-  contributorsCount: number;
+  contributionsCount: number;
   projectId: string;
   applicationId: string;
   projectName: string;

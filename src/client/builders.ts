@@ -60,7 +60,7 @@ export const roundMatchBuilder: ResourceBuilder<Match> = (
   matched: obj.matched,
   projectName: obj.projectName,
   payoutAddress: obj.payoutAddress,
-  contributorsCount: obj.contributorsCount,
+  contributionsCount: obj.contributionsCount,
   projectId: obj.projectId,
   applicationId: obj.applicationId,
 });

@@ -1,14 +1,23 @@
-import { ResourceBuilder, Project, Round, Application, Vote } from "./types.js";
+import {
+  RawObject,
+  ResourceBuilder,
+  Project,
+  Round,
+  Application,
+  Vote,
+} from "./types.js";
 
 export const projectBuilder: ResourceBuilder<Project> = (
-  obj: any
+  obj: RawObject
 ): Project => ({
   id: obj.id,
   projectNumber: obj.projectNumber,
   title: obj.metadata?.title ?? "",
 });
 
-export const roundBuilder: ResourceBuilder<Round> = (obj: any): Round => ({
+export const roundBuilder: ResourceBuilder<Round> = (
+  obj: RawObject
+): Round => ({
   id: obj.id,
   votes: obj.votes,
   uniqueContributors: obj.uniqueContributors,
@@ -16,7 +25,7 @@ export const roundBuilder: ResourceBuilder<Round> = (obj: any): Round => ({
   applicationsStartTime: new Date(obj.applicationsStartTime * 1000),
 });
 
-export const voteBuilder: ResourceBuilder<Vote> = (obj: any): Vote => ({
+export const voteBuilder: ResourceBuilder<Vote> = (obj: RawObject): Vote => ({
   id: obj.id,
   projectId: obj.projectId,
   roundId: obj.roundId,
@@ -28,7 +37,7 @@ export const voteBuilder: ResourceBuilder<Vote> = (obj: any): Vote => ({
 });
 
 export const roundApplicationBuilder: ResourceBuilder<Application> = (
-  obj: any
+  obj: RawObject
 ): Application => ({
   id: obj.id,
   projectNumber: obj.projectNumber,

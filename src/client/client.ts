@@ -16,7 +16,7 @@ export class Client extends BaseClient {
     roundVotes: "/data/:chainId/rounds/:roundId/votes.json",
     roundApplications: "/data/:chainId/rounds/:roundId/applications.json",
     roundProjects: "/data/:chainId/rounds/:roundId/projects.json",
-    roundMatchingFunds: "/data/:chainId/rounds/:roundId/matches",
+    roundMatchingFunds: "/chains/:chainId/rounds/:roundId/matches",
   };
 
   constructor(fetchImpl: typeof fetch, baseURI: string, chainId: number) {

@@ -27,8 +27,13 @@ export const roundBuilder: ResourceBuilder<Round> = (
 
 export const voteBuilder: ResourceBuilder<Vote> = (obj: RawObject): Vote => ({
   id: obj.id,
+  projectId: obj.projectId,
+  roundId: obj.roundId,
   token: obj.token,
+  voter: obj.voter,
+  grantAddress: obj.grantAddress,
   amount: obj.amount,
+  amountUSD: obj.amountUSD,
 });
 
 export const roundApplicationBuilder: ResourceBuilder<Application> = (

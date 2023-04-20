@@ -60,6 +60,15 @@ const projectCommand = (args: CommandHandlerArgs) =>
     .then((project) => console.log(project))
     .catch(logError);
 
+const votesCommand = (args: CommandHandlerArgs) =>
+  client
+    .getVotes(
+      args.roundId?.toString() ?? "",
+      args.projectId?.toString() ?? ""
+    )
+    .then((votes) => votes.forEach((v) => console.log(v)))
+    .catch(logError);
+
 const commands: { [name: string]: Command } = {
   projects: {
     options: {},
@@ -80,6 +89,20 @@ const commands: { [name: string]: Command } = {
     },
     handler: projectCommand,
   },
+
+  votes: {
+    options: {
+      roundId: {
+        type: "string",
+        short: "r",
+      },
+      projectId: {
+        type: "string",
+        short: "p",
+      },
+    },
+    handler: votesCommand,
+  }
 };
 
 const cmdName = process.argv[2];

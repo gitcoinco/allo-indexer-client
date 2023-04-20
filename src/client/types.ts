@@ -21,8 +21,13 @@ export type Round = {
 
 export type Vote = {
   id: string;
+  projectId: string;
+  roundId: string;
   token: string;
+  voter: string;
+  grantAddress: string;
   amount: string;
+  amountUSD: number;
 };
 
 export type Application = {

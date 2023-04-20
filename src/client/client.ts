@@ -10,6 +10,7 @@ import { Project, Round, Vote, Application } from "./types.js";
 export class Client extends BaseClient {
   protected routes: { [name: string]: string } = {
     projects: "/data/:chainId/projects.json",
+    projectVotes: "/data/:chainId/rounds/:roundId/projects/:projectId/votes.json",
     rounds: "/data/:chainId/rounds.json",
     roundVotes: "/data/:chainId/rounds/:roundId/votes.json",
     roundApplications: "/data/:chainId/rounds/:roundId/projects.json",
@@ -79,10 +80,6 @@ export class Client extends BaseClient {
     );
   }
 
-  getRoundVotes(roundId: string): Promise<Vote[]> {
-    return this.fetchResources("roundVotes", { roundId }, voteBuilder);
-  }
-
   getRoundApplications(roundId: string): Promise<Application[]> {
     return this.fetchResources(
       "roundApplications",
@@ -103,5 +100,17 @@ export class Client extends BaseClient {
       key,
       value
     );
+  }
+
+  getVotes(roundId: string, projectId?: string): Promise<Vote[]> {
+    if (projectId) {
+      return this.fetchResources(
+        "projectVotes",
+        { roundId, projectId },
+        voteBuilder
+      );
+    } else {
+      return this.fetchResources("roundVotes", { roundId }, voteBuilder);
+    }
   }
 }

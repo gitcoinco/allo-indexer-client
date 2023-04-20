@@ -150,4 +150,23 @@ describe("Client", () => {
       expect(project).toEqual(expectedProject);
     });
   });
+
+  describe("getVotes", () => {
+    test("returns project votes with project id", async () => {
+      const c = new Client(mockFetch(200, "projectVotes"), baseDataURI, chainId);
+      const votes = await c.getVotes(
+        "0xA000000000000000000000000000000000000000",
+        "0xA000000000000000000000000000000000000000000000000000000000000"
+      );
+      expect(votes.length).toEqual(2);
+    });
+
+    test("returns round votes with round id", async () => {
+      const c = new Client(mockFetch(200, "roundVotes"), baseDataURI, chainId);
+      const votes = await c.getVotes(
+        "0xA000000000000000000000000000000000000000",
+      ); 
+      expect(votes.length).toEqual(4);
+  });
+}); 
 });

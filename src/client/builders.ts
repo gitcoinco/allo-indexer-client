@@ -5,6 +5,7 @@ import {
   Round,
   Application,
   Vote,
+  Match,
 } from "./types.js";
 
 export const projectBuilder: ResourceBuilder<Project> = (
@@ -47,4 +48,14 @@ export const roundApplicationBuilder: ResourceBuilder<Application> = (
   amountUSD: obj.amountUSD,
   votes: obj.votes,
   uniqueContributors: obj.uniqueContributors,
+});
+
+export const roundMatchBuilder: ResourceBuilder<Match> = (
+  obj: RawObject
+): Match => ({
+  totalReceived: obj.totalReceived,
+  sumOfSqrt: obj.sumOfSqrt,
+  matched: obj.matched,
+  projectName: obj.projectName,
+  payoutAddress: obj.payoutAddress,
 });

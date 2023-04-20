@@ -40,3 +40,11 @@ export type Application = {
   votes: number;
   uniqueContributors: number;
 };
+
+export type Match = {
+  totalReceived: number;
+  sumOfSqrt: number;
+  matched: number;
+  projectName: string;
+  payoutAddress: string;
+};

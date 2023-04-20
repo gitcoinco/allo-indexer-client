@@ -4,8 +4,9 @@ import {
   roundBuilder,
   voteBuilder,
   roundApplicationBuilder,
+  roundMatchBuilder,
 } from "./builders.js";
-import { Project, Round, Vote, Application } from "./types.js";
+import { Project, Round, Vote, Application, Match } from "./types.js";
 
 export class Client extends BaseClient {
   protected routes: { [name: string]: string } = {
@@ -83,11 +84,11 @@ export class Client extends BaseClient {
     );
   }
 
-  getRoundMatchingFunds(roundId: string): Promise<Application[]> {
+  getRoundMatchingFunds(roundId: string): Promise<Match[]> {
     return this.fetchResources(
       "roundMatchingFunds",
       { roundId },
-      roundApplicationBuilder
+      roundMatchBuilder
     );
   }
 

@@ -5,6 +5,7 @@ import {
   Round,
   Application,
   Vote,
+  Match,
 } from "./types.js";
 
 export const projectBuilder: ResourceBuilder<Project> = (
@@ -23,6 +24,8 @@ export const roundBuilder: ResourceBuilder<Round> = (
   uniqueContributors: obj.uniqueContributors,
   amountUSD: obj.amountUSD,
   applicationsStartTime: new Date(obj.applicationsStartTime * 1000),
+  matchAmount: obj.matchAmount,
+  matchAmountUSD: obj.matchAmountUSD,
 });
 
 export const voteBuilder: ResourceBuilder<Vote> = (obj: RawObject): Vote => ({
@@ -47,4 +50,17 @@ export const roundApplicationBuilder: ResourceBuilder<Application> = (
   amountUSD: obj.amountUSD,
   votes: obj.votes,
   uniqueContributors: obj.uniqueContributors,
+});
+
+export const roundMatchBuilder: ResourceBuilder<Match> = (
+  obj: RawObject
+): Match => ({
+  totalReceived: obj.totalReceived,
+  sumOfSqrt: obj.sumOfSqrt,
+  matched: obj.matched,
+  projectName: obj.projectName,
+  payoutAddress: obj.payoutAddress,
+  contributionsCount: obj.contributionsCount,
+  projectId: obj.projectId,
+  applicationId: obj.applicationId,
 });

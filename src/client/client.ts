@@ -4,16 +4,20 @@ import {
   roundBuilder,
   voteBuilder,
   roundApplicationBuilder,
+  roundMatchBuilder,
 } from "./builders.js";
-import { Project, Round, Vote, Application } from "./types.js";
+import { Project, Round, Vote, Application, Match } from "./types.js";
 
 export class Client extends BaseClient {
   protected routes: { [name: string]: string } = {
     projects: "/data/:chainId/projects.json",
-    projectVotes: "/data/:chainId/rounds/:roundId/projects/:projectId/votes.json",
+    projectVotes:
+      "/data/:chainId/rounds/:roundId/projects/:projectId/votes.json",
     rounds: "/data/:chainId/rounds.json",
     roundVotes: "/data/:chainId/rounds/:roundId/votes.json",
-    roundApplications: "/data/:chainId/rounds/:roundId/projects.json",
+    roundApplications: "/data/:chainId/rounds/:roundId/applications.json",
+    roundProjects: "/data/:chainId/rounds/:roundId/projects.json",
+    roundMatchingFunds: "/chains/:chainId/rounds/:roundId/matches",
   };
 
   constructor(fetchImpl: typeof fetch, baseURI: string, chainId: number) {
@@ -77,6 +81,22 @@ export class Client extends BaseClient {
       key,
       value,
       caseSensitive
+    );
+  }
+
+  getRoundMatchingFunds(roundId: string): Promise<Match[]> {
+    return this.fetchResources(
+      "roundMatchingFunds",
+      { roundId },
+      roundMatchBuilder
+    );
+  }
+
+  getRoundProjects(roundId: string): Promise<Application[]> {
+    return this.fetchResources(
+      "roundProjects",
+      { roundId },
+      roundApplicationBuilder
     );
   }
 

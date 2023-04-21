@@ -39,4 +39,5 @@ export type Application = {
   amountUSD: number;
   votes: number;
   uniqueContributors: number;
+  metadata: RawObject;
 };

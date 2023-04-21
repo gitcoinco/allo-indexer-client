@@ -47,4 +47,5 @@ export const roundApplicationBuilder: ResourceBuilder<Application> = (
   amountUSD: obj.amountUSD,
   votes: obj.votes,
   uniqueContributors: obj.uniqueContributors,
+  metadata: obj.metadata,
 });

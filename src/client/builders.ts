@@ -23,9 +23,12 @@ export const roundBuilder: ResourceBuilder<Round> = (
   votes: obj.votes,
   uniqueContributors: obj.uniqueContributors,
   amountUSD: obj.amountUSD,
-  applicationsStartTime: new Date(obj.applicationsStartTime * 1000),
   matchAmount: obj.matchAmount,
   matchAmountUSD: obj.matchAmountUSD,
+  applicationsStartTime: new Date(obj.applicationsStartTime * 1000),
+  applicationsEndTime: new Date(obj.applicationsEndTime * 1000),
+  roundStartTime: new Date(obj.roundStartTime * 1000),
+  roundEndTime: new Date(obj.roundEndTime * 1000),
 });
 
 export const voteBuilder: ResourceBuilder<Vote> = (obj: RawObject): Vote => ({

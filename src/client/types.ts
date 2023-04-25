@@ -19,6 +19,9 @@ export type Round = {
   matchAmountUSD: number;
   amountUSD: number;
   applicationsStartTime: Date;
+  applicationsEndTime: Date;
+  roundStartTime: Date;
+  roundEndTime: Date;
 };
 
 export type Vote = {

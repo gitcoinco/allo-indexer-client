@@ -4,9 +4,9 @@ import {
   roundBuilder,
   voteBuilder,
   roundApplicationBuilder,
-  roundMatchBuilder,
+  roundMatchBuilder, passportScoreBuilder
 } from "./builders.js";
-import { Project, Round, Vote, Application, Match } from "./types.js";
+import { Project, Round, Vote, Application, Match, PassportScore } from "./types.js";
 
 export class Client extends BaseClient {
   protected routes: { [name: string]: string } = {
@@ -18,6 +18,7 @@ export class Client extends BaseClient {
     roundApplications: "/data/:chainId/rounds/:roundId/applications.json",
     roundProjects: "/data/:chainId/rounds/:roundId/projects.json",
     roundMatchingFunds: "/chains/:chainId/rounds/:roundId/matches",
+    passportScores: "/data/passport_scores.json"
   };
 
   constructor(fetchImpl: typeof fetch, baseURI: string, chainId: number) {
@@ -132,5 +133,9 @@ export class Client extends BaseClient {
     } else {
       return this.fetchResources("roundVotes", { roundId }, voteBuilder);
     }
+  }
+
+  getPassportScores(): Promise<PassportScore[]> {
+    return this.fetchResources("passportScores", {}, passportScoreBuilder);
   }
 }

@@ -1,14 +1,13 @@
 import { Client } from "../client";
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 
 const baseDataURI = "https://test.dev";
 const chainId = 0;
 
 const loadFixture = (name: string) => {
   const p = path.resolve(__dirname, "fixtures", `${name}.json`);
-  const data = fs.readFileSync(p, { encoding: "utf8", flag: "r" });
-  return data;
+  return fs.readFileSync(p, { encoding: "utf8", flag: "r" });
 };
 
 const mockFetch = (status: number, fixture: string) => {
@@ -153,7 +152,11 @@ describe("Client", () => {
 
   describe("getVotes", () => {
     test("returns project votes with project id", async () => {
-      const c = new Client(mockFetch(200, "projectVotes"), baseDataURI, chainId);
+      const c = new Client(
+        mockFetch(200, "projectVotes"),
+        baseDataURI,
+        chainId
+      );
       const votes = await c.getVotes(
         "0xA000000000000000000000000000000000000000",
         "0xA000000000000000000000000000000000000000000000000000000000000"
@@ -164,9 +167,21 @@ describe("Client", () => {
     test("returns round votes with round id", async () => {
       const c = new Client(mockFetch(200, "roundVotes"), baseDataURI, chainId);
       const votes = await c.getVotes(
-        "0xA000000000000000000000000000000000000000",
-      ); 
+        "0xA000000000000000000000000000000000000000"
+      );
       expect(votes.length).toEqual(4);
+    });
   });
-}); 
+
+  describe("getPassportScores", () => {
+    test("returns passport scores", async () => {
+      const c = new Client(
+        mockFetch(200, "passportScores"),
+        baseDataURI,
+        chainId
+      );
+      const scores = await c.getPassportScores();
+      expect(scores.length).toEqual(4);
+    });
+  });
 });

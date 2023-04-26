@@ -1,9 +1,12 @@
 import { Client } from "../client";
 import * as fs from "fs";
 import * as path from "path";
+import { vi } from "vitest";
 
 const baseDataURI = "https://test.dev";
 const chainId = 0;
+
+import { describe, test, expect } from "vitest";
 
 const loadFixture = (name: string) => {
   const p = path.resolve(__dirname, "fixtures", `${name}.json`);
@@ -13,7 +16,7 @@ const loadFixture = (name: string) => {
 const mockFetch = (status: number, fixture: string) => {
   const body = loadFixture(fixture);
   const responseMock = new Response(body, { status });
-  return jest.fn(() => Promise.resolve(responseMock));
+  return vi.fn(() => Promise.resolve(responseMock));
 };
 
 describe("Client", () => {

@@ -22,10 +22,12 @@ abstract class BaseClient {
   protected async fetchResources<T>(
     routeName: string,
     params: RouteParams,
-    builder: ResourceBuilder<T>
+    builder: ResourceBuilder<T>,
+    csv?: boolean
   ): Promise<T[]> {
     const url = this.buildURL(routeName, params);
-    return this.fetch(url)
+
+    return this.fetch(csv ? `${url}.csv` : url)
       .then((resp) => {
         if (!resp.ok) {
           throw new ResourceFetchError(
@@ -35,7 +37,11 @@ abstract class BaseClient {
           );
         }
 
-        return resp.json();
+        if (csv) {
+          return resp.text();
+        } else {
+          return resp.json();
+        }
       })
       .then((list) => list.map((obj: Array<RawObject>) => builder(obj)));
   }

@@ -71,10 +71,8 @@ const votesCommand = (args: CommandHandlerArgs) =>
 
 const passportScoresCommand = () =>
   client
-    .getPassportScores(
-
-    )
-    .then((votes) => votes.forEach((v) => console.log(v)))
+    .getPassportScores()
+    .then((scores) => scores.forEach((v) => console.log(v)))
     .catch(logError);
 
 const commands: { [name: string]: Command } = {

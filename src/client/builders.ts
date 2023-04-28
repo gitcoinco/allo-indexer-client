@@ -24,7 +24,7 @@ export const roundBuilder: ResourceBuilder<Round> = (
   uniqueContributors: obj.uniqueContributors,
   amountUSD: obj.amountUSD,
   token: obj.token,
-  matchAmount: obj.matchAmount,
+  matchAmount: BigInt(obj.matchAmount),
   matchAmountUSD: obj.matchAmountUSD,
   applicationsStartTime: new Date(obj.applicationsStartTime * 1000),
   applicationsEndTime: new Date(obj.applicationsEndTime * 1000),

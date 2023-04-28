@@ -15,8 +15,8 @@ export type Round = {
   id: string;
   votes: number;
   uniqueContributors: number;
-  matchAmount: string;
   token: string;
+  matchAmount: bigint;
   matchAmountUSD: number;
   amountUSD: number;
   applicationsStartTime: Date;

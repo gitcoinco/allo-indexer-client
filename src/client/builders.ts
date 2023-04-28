@@ -62,6 +62,7 @@ export const roundMatchBuilder: ResourceBuilder<Match> = (
   totalReceived: obj.totalReceived,
   sumOfSqrt: obj.sumOfSqrt,
   matched: obj.matched,
+  matchedUSD: obj.matchedUSD,
   projectName: obj.projectName,
   payoutAddress: obj.payoutAddress,
   contributionsCount: obj.contributionsCount,

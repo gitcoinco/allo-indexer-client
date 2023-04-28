@@ -48,9 +48,10 @@ export type Application = {
 };
 
 export type Match = {
-  totalReceived: number;
-  sumOfSqrt: number;
-  matched: number;
+  totalReceived: string;
+  sumOfSqrt: string;
+  matched: string;
+  matchedUSD: number;
   contributionsCount: number;
   projectId: string;
   applicationId: string;

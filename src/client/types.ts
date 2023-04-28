@@ -37,7 +37,7 @@ export type Vote = {
 
 export type Application = {
   id: string;
-  projectNumber: number;
+  projectId: string;
   roundId: string;
   status: string;
   payoutAddress: string;

@@ -46,7 +46,7 @@ export const roundApplicationBuilder: ResourceBuilder<Application> = (
   obj: RawObject
 ): Application => ({
   id: obj.id,
-  projectNumber: obj.projectNumber,
+  projectId: obj.projectId,
   roundId: obj.roundId,
   status: obj.status,
   payoutAddress: obj.payoutAddress,

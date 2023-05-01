@@ -69,39 +69,50 @@ const votesCommand = (args: CommandHandlerArgs) =>
     .then((votes) => votes.forEach((v) => console.log(v)))
     .catch(logError);
 
+const passportScoresCommand = () =>
+  client
+    .getPassportScores()
+    .then((scores) => scores.forEach((v) => console.log(v)))
+    .catch(logError);
+
 const commands: { [name: string]: Command } = {
   projects: {
     options: {},
-    handler: projectsCommand,
+    handler: projectsCommand
   },
 
   rounds: {
     options: {},
-    handler: roundsCommand,
+    handler: roundsCommand
   },
 
   project: {
     options: {
       projectNumber: {
         type: "string",
-        short: "p",
-      },
+        short: "p"
+      }
     },
-    handler: projectCommand,
+    handler: projectCommand
   },
 
   votes: {
     options: {
       roundId: {
         type: "string",
-        short: "r",
+        short: "r"
       },
       projectId: {
         type: "string",
-        short: "p",
-      },
+        short: "p"
+      }
     },
-    handler: votesCommand,
+    handler: votesCommand
+  },
+
+  passportScores: {
+    options: {},
+    handler: passportScoresCommand
   }
 };
 
@@ -116,7 +127,7 @@ if (cmd === undefined) {
 
 const { values } = parseArgs({
   args: flags,
-  options: cmd.options,
+  options: cmd.options
 });
 
 await cmd.handler(values);

@@ -1,7 +1,5 @@
-export type RawObject = {
-  // eslint-disable-next-line
-  [key: string]: any;
-};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type RawObject = Record<string, any>;
 
 export type ResourceBuilder<T> = (obj: RawObject) => T;
 
@@ -55,4 +53,20 @@ export type Match = {
   applicationId: string;
   projectName: string;
   payoutAddress: string;
+};
+
+export type PassportScore = {
+  address: string;
+  score: string;
+  status: string;
+  last_score_timestamp: string;
+  evidence: Evidence;
+  error: unknown;
+};
+
+export type Evidence = {
+  type: string;
+  success: boolean;
+  rawScore: string;
+  threshold: string;
 };

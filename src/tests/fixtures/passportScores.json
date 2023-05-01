@@ -1,0 +1,54 @@
+[
+  {
+    "address": "0xe5e9190ce7cc7af0088b5ef37973b40151174d57",
+    "score": "1.000000000",
+    "status": "DONE",
+    "last_score_timestamp": "2023-04-25T08:29:02.099719+00:00",
+    "evidence": {
+      "type": "ThresholdScoreCheck",
+      "success": true,
+      "rawScore": "29.68",
+      "threshold": "15.00000"
+    },
+    "error": null
+  },
+  {
+    "address": "0xdf4dc43af8b66469076bb077788da74df1e54e9e",
+    "score": "0E-9",
+    "status": "DONE",
+    "last_score_timestamp": "2023-04-25T08:34:20.628799+00:00",
+    "evidence": {
+      "type": "ThresholdScoreCheck",
+      "success": false,
+      "rawScore": "14.17",
+      "threshold": "15.00000"
+    },
+    "error": null
+  },
+  {
+    "address": "0x9046643ad47128010512ce8c524f3b68a14d6695",
+    "score": "1.000000000",
+    "status": "DONE",
+    "last_score_timestamp": "2023-04-25T07:51:46.948690+00:00",
+    "evidence": {
+      "type": "ThresholdScoreCheck",
+      "success": true,
+      "rawScore": "18.67",
+      "threshold": "15.00000"
+    },
+    "error": null
+  },
+  {
+    "address": "0xe1f9d37e3447505cfe53f9ec50691a681fc12815",
+    "score": "1.000000000",
+    "status": "DONE",
+    "last_score_timestamp": "2023-04-25T08:09:20.947709+00:00",
+    "evidence": {
+      "type": "ThresholdScoreCheck",
+      "success": true,
+      "rawScore": "20.75",
+      "threshold": "15.00000"
+    },
+    "error": null
+  }
+]

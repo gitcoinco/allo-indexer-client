@@ -23,9 +23,10 @@ abstract class BaseClient {
     routeName: string,
     params: RouteParams,
     builder: ResourceBuilder<T>,
+    fetchOptions?: RequestInit,
   ): Promise<T[]> {
     const url = this.buildURL(routeName, params);
-    return this.fetch(url)
+    return this.fetch(url, fetchOptions)
       .then((resp) => {
         if (!resp.ok) {
           throw new ResourceFetchError(
@@ -47,19 +48,22 @@ abstract class BaseClient {
     key: keyof T,
     value: string | number,
     caseSensitive = false,
+    fetchOptions?: RequestInit,
   ): Promise<T[]> {
-    return this.fetchResources(routeName, params, builder).then((list: T[]) => {
-      const f = (r: T) => {
-        const actualValue = r[key];
-        if (caseSensitive && typeof actualValue === "string") {
-          return actualValue.toLowerCase() === value.toString().toLowerCase();
-        }
+    return this.fetchResources(routeName, params, builder, fetchOptions).then(
+      (list: T[]) => {
+        const f = (r: T) => {
+          const actualValue = r[key];
+          if (caseSensitive && typeof actualValue === "string") {
+            return actualValue.toLowerCase() === value.toString().toLowerCase();
+          }
 
-        return actualValue === value;
-      };
+          return actualValue === value;
+        };
 
-      return list.filter(f);
-    });
+        return list.filter(f);
+      },
+    );
   }
 
   protected async fetchResourceFromList<T>(

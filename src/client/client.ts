@@ -4,9 +4,17 @@ import {
   roundBuilder,
   voteBuilder,
   roundApplicationBuilder,
-  roundMatchBuilder, passportScoreBuilder
+  roundMatchBuilder,
+  passportScoreBuilder,
 } from "./builders.js";
-import { Project, Round, Vote, Application, Match, PassportScore } from "./types.js";
+import {
+  Project,
+  Round,
+  Vote,
+  Application,
+  Match,
+  PassportScore,
+} from "./types.js";
 
 export class Client extends BaseClient {
   protected routes: { [name: string]: string } = {
@@ -18,7 +26,7 @@ export class Client extends BaseClient {
     roundApplications: "/data/:chainId/rounds/:roundId/applications.json",
     roundProjects: "/data/:chainId/rounds/:roundId/projects.json",
     roundMatchingFunds: "/chains/:chainId/rounds/:roundId/matches",
-    passportScores: "/data/passport_scores.json"
+    passportScores: "/data/passport_scores.json",
   };
 
   constructor(fetchImpl: typeof fetch, baseURI: string, chainId: number) {
@@ -31,27 +39,27 @@ export class Client extends BaseClient {
 
   getProjectBy(
     key: keyof Project,
-    value: string | number
+    value: string | number,
   ): Promise<Project | undefined> {
     return this.fetchResourceFromList(
       "projects",
       {},
       projectBuilder,
       key,
-      value
+      value,
     );
   }
 
   getProjectsBy(
     key: keyof Project,
-    value: string | number
+    value: string | number,
   ): Promise<Project[]> {
     return this.fetchResourcesFromList(
       "projects",
       {},
       projectBuilder,
       key,
-      value
+      value,
     );
   }
 
@@ -62,7 +70,7 @@ export class Client extends BaseClient {
       projectBuilder,
       "id",
       id,
-      true
+      true,
     );
   }
 
@@ -73,7 +81,7 @@ export class Client extends BaseClient {
   getRoundBy(
     key: keyof Round,
     value: string | number,
-    caseSensitive = false
+    caseSensitive = false,
   ): Promise<Round | undefined> {
     return this.fetchResourceFromList(
       "rounds",
@@ -81,7 +89,7 @@ export class Client extends BaseClient {
       roundBuilder,
       key,
       value,
-      caseSensitive
+      caseSensitive,
     );
   }
 
@@ -89,7 +97,7 @@ export class Client extends BaseClient {
     return this.fetchResources(
       "roundMatchingFunds",
       { roundId },
-      roundMatchBuilder
+      roundMatchBuilder,
     );
   }
 
@@ -97,7 +105,7 @@ export class Client extends BaseClient {
     return this.fetchResources(
       "roundProjects",
       { roundId },
-      roundApplicationBuilder
+      roundApplicationBuilder,
     );
   }
 
@@ -105,21 +113,21 @@ export class Client extends BaseClient {
     return this.fetchResources(
       "roundApplications",
       { roundId },
-      roundApplicationBuilder
+      roundApplicationBuilder,
     );
   }
 
   getRoundApplicationBy(
     roundId: string,
     key: keyof Application,
-    value: string | number
+    value: string | number,
   ): Promise<Application | undefined> {
     return this.fetchResourceFromList(
       "roundApplications",
       { roundId },
       roundApplicationBuilder,
       key,
-      value
+      value,
     );
   }
 
@@ -128,7 +136,7 @@ export class Client extends BaseClient {
       return this.fetchResources(
         "projectVotes",
         { roundId, projectId },
-        voteBuilder
+        voteBuilder,
       );
     } else {
       return this.fetchResources("roundVotes", { roundId }, voteBuilder);

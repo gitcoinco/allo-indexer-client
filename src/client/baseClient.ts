@@ -22,7 +22,7 @@ abstract class BaseClient {
   protected async fetchResources<T>(
     routeName: string,
     params: RouteParams,
-    builder: ResourceBuilder<T>
+    builder: ResourceBuilder<T>,
   ): Promise<T[]> {
     const url = this.buildURL(routeName, params);
     return this.fetch(url)
@@ -31,7 +31,7 @@ abstract class BaseClient {
           throw new ResourceFetchError(
             resp.status,
             resp.statusText,
-            `cannot fetch resource at route "${routeName}"`
+            `cannot fetch resource at route "${routeName}"`,
           );
         }
 
@@ -46,7 +46,7 @@ abstract class BaseClient {
     builder: ResourceBuilder<T>,
     key: keyof T,
     value: string | number,
-    caseSensitive = false
+    caseSensitive = false,
   ): Promise<T[]> {
     return this.fetchResources(routeName, params, builder).then((list: T[]) => {
       const f = (r: T) => {
@@ -68,7 +68,7 @@ abstract class BaseClient {
     builder: ResourceBuilder<T>,
     key: keyof T,
     value: string | number,
-    caseSensitive = false
+    caseSensitive = false,
   ): Promise<T | undefined> {
     return this.fetchResourcesFromList(
       routeName,
@@ -76,7 +76,7 @@ abstract class BaseClient {
       builder,
       key,
       value,
-      caseSensitive
+      caseSensitive,
     ).then((list: T[]) => {
       return list[0];
     });

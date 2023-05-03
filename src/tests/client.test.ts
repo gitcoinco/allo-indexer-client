@@ -51,7 +51,7 @@ describe("Client", () => {
     test("throws error for HTTP status code outside 200..299", async () => {
       const c = new Client(mockFetch(404, "projects"), baseDataURI, chainId);
       await expect(c.getProjects()).rejects.toThrow(
-        `cannot fetch resource at route "projects"`
+        `cannot fetch resource at route "projects"`,
       );
     });
   });
@@ -60,7 +60,7 @@ describe("Client", () => {
     test("returns project by id", async () => {
       const c = new Client(mockFetch(200, "projects"), baseDataURI, chainId);
       const project = await c.getProjectById(
-        "0xA0000000000000000000000000000000000000000000000000000000000001"
+        "0xA0000000000000000000000000000000000000000000000000000000000001",
       );
 
       const expectedProject = {
@@ -76,7 +76,7 @@ describe("Client", () => {
       const c = new Client(mockFetch(200, "projects"), baseDataURI, chainId);
       const project = await c.getProjectBy(
         "id",
-        "0xa0000000000000000000000000000000000000000000000000000000000001"
+        "0xa0000000000000000000000000000000000000000000000000000000000001",
       );
 
       expect(project).toEqual(undefined);
@@ -85,7 +85,7 @@ describe("Client", () => {
     test("returns project by id case insensitive", async () => {
       const c = new Client(mockFetch(200, "projects"), baseDataURI, chainId);
       const project = await c.getProjectById(
-        "0xa0000000000000000000000000000000000000000000000000000000000001"
+        "0xa0000000000000000000000000000000000000000000000000000000000001",
       );
 
       const expectedProject = {
@@ -106,17 +106,17 @@ describe("Client", () => {
       expect(projects.length).toEqual(2);
 
       expect(projects[0].id).toEqual(
-        "0xA0000000000000000000000000000000000000000000000000000000000002"
+        "0xA0000000000000000000000000000000000000000000000000000000000002",
       );
       expect(projects[0].projectNumber).toEqual(2);
       expect(projects[0].title).toEqual("Project 2");
 
       expect(projects[1].id).toEqual(
-        "0xA0000000000000000000000000000000000000000000000000000000000003"
+        "0xA0000000000000000000000000000000000000000000000000000000000003",
       );
       expect(projects[1].projectNumber).toEqual(2);
       expect(projects[1].title).toEqual(
-        "Project 3 (same projectNumber from another registry, so the id is different)"
+        "Project 3 (same projectNumber from another registry, so the id is different)",
       );
     });
   });
@@ -125,7 +125,7 @@ describe("Client", () => {
     test("returns project by id", async () => {
       const c = new Client(mockFetch(200, "projects"), baseDataURI, chainId);
       const project = await c.getProjectById(
-        "0xA0000000000000000000000000000000000000000000000000000000000001"
+        "0xA0000000000000000000000000000000000000000000000000000000000001",
       );
 
       const expectedProject = {
@@ -140,7 +140,7 @@ describe("Client", () => {
     test("returns project by id case insensitive", async () => {
       const c = new Client(mockFetch(200, "projects"), baseDataURI, chainId);
       const project = await c.getProjectById(
-        "0xa0000000000000000000000000000000000000000000000000000000000001"
+        "0xa0000000000000000000000000000000000000000000000000000000000001",
       );
 
       const expectedProject = {
@@ -158,11 +158,11 @@ describe("Client", () => {
       const c = new Client(
         mockFetch(200, "projectVotes"),
         baseDataURI,
-        chainId
+        chainId,
       );
       const votes = await c.getVotes(
         "0xA000000000000000000000000000000000000000",
-        "0xA000000000000000000000000000000000000000000000000000000000000"
+        "0xA000000000000000000000000000000000000000000000000000000000000",
       );
       expect(votes.length).toEqual(2);
     });
@@ -170,7 +170,7 @@ describe("Client", () => {
     test("returns round votes with round id", async () => {
       const c = new Client(mockFetch(200, "roundVotes"), baseDataURI, chainId);
       const votes = await c.getVotes(
-        "0xA000000000000000000000000000000000000000"
+        "0xA000000000000000000000000000000000000000",
       );
       expect(votes.length).toEqual(4);
     });
@@ -181,7 +181,7 @@ describe("Client", () => {
       const c = new Client(
         mockFetch(200, "passportScores"),
         baseDataURI,
-        chainId
+        chainId,
       );
       const scores = await c.getPassportScores();
       expect(scores.length).toEqual(4);

@@ -23,7 +23,8 @@ export const roundBuilder: ResourceBuilder<Round> = (
   votes: obj.votes,
   uniqueContributors: obj.uniqueContributors,
   amountUSD: obj.amountUSD,
-  matchAmount: obj.matchAmount,
+  token: obj.token,
+  matchAmount: BigInt(obj.matchAmount),
   matchAmountUSD: obj.matchAmountUSD,
   applicationsStartTime: new Date(obj.applicationsStartTime * 1000),
   applicationsEndTime: new Date(obj.applicationsEndTime * 1000),
@@ -58,9 +59,10 @@ export const roundApplicationBuilder: ResourceBuilder<Application> = (
 export const roundMatchBuilder: ResourceBuilder<Match> = (
   obj: RawObject
 ): Match => ({
-  totalReceived: obj.totalReceived,
-  sumOfSqrt: obj.sumOfSqrt,
-  matched: obj.matched,
+  totalReceived: BigInt(obj.totalReceived),
+  sumOfSqrt: BigInt(obj.sumOfSqrt),
+  matched: BigInt(obj.matched),
+  matchedUSD: obj.matchedUSD,
   projectName: obj.projectName,
   payoutAddress: obj.payoutAddress,
   contributionsCount: obj.contributionsCount,

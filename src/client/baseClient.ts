@@ -26,19 +26,28 @@ abstract class BaseClient {
     fetchOptions?: RequestInit,
   ): Promise<T[]> {
     const url = this.buildURL(routeName, params);
-    return this.fetch(url, fetchOptions)
-      .then((resp) => {
-        if (!resp.ok) {
-          throw new ResourceFetchError(
-            resp.status,
-            resp.statusText,
-            `cannot fetch resource at route "${routeName}"`,
-          );
-        }
+    const resp = await this.fetch(url, fetchOptions);
 
-        return resp.json();
-      })
-      .then((list) => list.map((obj: Array<RawObject>) => builder(obj)));
+    if (!resp.ok) {
+      let serverErrorMessage = undefined;
+
+      try {
+        serverErrorMessage = await resp.json();
+      } catch (e) {
+        // ignore if not json
+      }
+
+      throw new ResourceFetchError(
+        resp.status,
+        resp.statusText,
+        serverErrorMessage?.error ??
+          `cannot fetch resource at route "${routeName}"`,
+      );
+    }
+
+    const list = await resp.json();
+
+    return list.map((obj: Array<RawObject>) => builder(obj));
   }
 
   protected async fetchResourcesFromList<T>(

@@ -13,17 +13,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 1
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
 
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
 
-    - name: Test and Build
-      run: |
-        npm install
-        npm run lint
-        npm run test
+      - name: Test and Build
+        run: |
+          npm install
+          npm run lint
+          npx prettier --check .
+
+          npm run test
+

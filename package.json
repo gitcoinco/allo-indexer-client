@@ -6,6 +6,12 @@
   "main": "dist/client/index.js",
   "types": "dist/client/index.d.ts",
   "bin": "dist/cli/index.ts",
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false
+  },
   "scripts": {
     "build": "tsc",
     "lint": "eslint src",

@@ -4,7 +4,7 @@ import { parseArgs } from "util";
 type CommandHandlerArgs = { [arg: string]: string | boolean | undefined };
 
 type CommandHandlerWithArgs = (
-  args: CommandHandlerArgs
+  args: CommandHandlerArgs,
   // eslint-disable-next-line
 ) => Promise<any>;
 // eslint-disable-next-line
@@ -32,7 +32,7 @@ const logError = (err: Error) => {
       console.error(
         "resource fetch error:",
         `${e.status} - ${e.statusText}.`,
-        err.message
+        err.message,
       );
       break;
     }
@@ -62,10 +62,7 @@ const projectCommand = (args: CommandHandlerArgs) =>
 
 const votesCommand = (args: CommandHandlerArgs) =>
   client
-    .getVotes(
-      args.roundId?.toString() ?? "",
-      args.projectId?.toString() ?? ""
-    )
+    .getVotes(args.roundId?.toString() ?? "", args.projectId?.toString() ?? "")
     .then((votes) => votes.forEach((v) => console.log(v)))
     .catch(logError);
 
@@ -78,42 +75,42 @@ const passportScoresCommand = () =>
 const commands: { [name: string]: Command } = {
   projects: {
     options: {},
-    handler: projectsCommand
+    handler: projectsCommand,
   },
 
   rounds: {
     options: {},
-    handler: roundsCommand
+    handler: roundsCommand,
   },
 
   project: {
     options: {
       projectNumber: {
         type: "string",
-        short: "p"
-      }
+        short: "p",
+      },
     },
-    handler: projectCommand
+    handler: projectCommand,
   },
 
   votes: {
     options: {
       roundId: {
         type: "string",
-        short: "r"
+        short: "r",
       },
       projectId: {
         type: "string",
-        short: "p"
-      }
+        short: "p",
+      },
     },
-    handler: votesCommand
+    handler: votesCommand,
   },
 
   passportScores: {
     options: {},
-    handler: passportScoresCommand
-  }
+    handler: passportScoresCommand,
+  },
 };
 
 const cmdName = process.argv[2];
@@ -127,7 +124,7 @@ if (cmd === undefined) {
 
 const { values } = parseArgs({
   args: flags,
-  options: cmd.options
+  options: cmd.options,
 });
 
 await cmd.handler(values);

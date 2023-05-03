@@ -26,6 +26,6 @@ jobs:
         run: |
           npm install
           npm run lint
-          npm run check-formatting
+          npx pretty-quick --check .
 
           npm run test

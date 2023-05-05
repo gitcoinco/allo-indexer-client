@@ -93,13 +93,12 @@ export class Client extends BaseClient {
     );
   }
 
-  getRoundMatchingFunds(roundId: string, overrides?: Blob): Promise<Match[]> {
+  getRoundMatchingFunds(roundId: string,  params?: any, overrides?: Blob): Promise<Match[]> {
     let fetchOptions = undefined;
 
     if (overrides) {
       const body = new FormData();
       body.set("overrides", overrides);
-
       fetchOptions = {
         method: "POST",
         body,
@@ -108,7 +107,7 @@ export class Client extends BaseClient {
 
     return this.fetchResources(
       "roundMatchingFunds",
-      { roundId },
+      { roundId, ...params },
       roundMatchBuilder,
       fetchOptions,
     );

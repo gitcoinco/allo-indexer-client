@@ -2,7 +2,7 @@ import { RawObject, ResourceBuilder } from "./types.js";
 import { ResourceFetchError } from "./errors.js";
 
 type RouteParams = {
-  [key: string]: string | number;
+  [key: string]: string | number | boolean;
 };
 
 abstract class BaseClient {
@@ -41,7 +41,7 @@ abstract class BaseClient {
         resp.status,
         resp.statusText,
         serverErrorMessage?.error ??
-          `cannot fetch resource at route "${routeName}"`,
+        `cannot fetch resource at route "${routeName}"`,
       );
     }
 
@@ -95,14 +95,23 @@ abstract class BaseClient {
     });
   }
 
-  protected buildURL(routeName: string, params: RouteParams): string {
+  protected buildURL(routeName: string, params: any): string {
+    const { query, ...restParams } = params;
+
     const path = this.compileRoute(this.routes[routeName], {
-      ...params,
+      ...restParams,
       chainId: this.chainId,
     });
 
-    return new URL(path, this.baseURI).toString();
+    const url = new URL(path, this.baseURI);
+
+    if (query) {
+      Object.keys(query).forEach((key) => url.searchParams.set(key, query[key]));
+    }
+
+    return url.toString();
   }
+
 
   protected compileRoute(route: string, params: RouteParams): string {
     let slug = route;

@@ -104,6 +104,10 @@ export class Client extends BaseClient {
         method: "POST",
         body,
       };
+    } else {
+      fetchOptions = {
+          method: "GET",
+      };
     }
 
     return this.fetchResources(

@@ -1,4 +1,4 @@
-import BaseClient from "./baseClient.js";
+import BaseClient, { RequestParams } from "./baseClient.js";
 import {
   projectBuilder,
   roundBuilder,
@@ -93,24 +93,30 @@ export class Client extends BaseClient {
     );
   }
 
-  getRoundMatchingFunds(roundId: string, overrides?: Blob): Promise<Match[]> {
-    let fetchOptions = undefined;
+  getRoundMatchingFunds(
+    roundId: string,
+    overrides?: Blob,
+    ignoreSaturation?: boolean,
+  ): Promise<Match[]> {
+    const params: RequestParams = {
+      query: {},
+      body: {},
+    };
+
+    if (ignoreSaturation !== undefined) {
+      params.query["ignoreSaturation"] = ignoreSaturation.toString();
+    }
 
     if (overrides) {
-      const body = new FormData();
-      body.set("overrides", overrides);
-
-      fetchOptions = {
-        method: "POST",
-        body,
-      };
+      params.body["overrides"] = overrides;
     }
 
     return this.fetchResources(
       "roundMatchingFunds",
       { roundId },
       roundMatchBuilder,
-      fetchOptions,
+      params,
+      "POST",
     );
   }
 

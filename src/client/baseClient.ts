@@ -2,8 +2,21 @@ import { RawObject, ResourceBuilder } from "./types.js";
 import { ResourceFetchError } from "./errors.js";
 
 type RouteParams = {
-  [key: string]: string | number;
+  [key: string]: string;
 };
+
+export type QueryParams = {
+  [key: string]: string;
+};
+
+export type RequestParams = {
+  query: QueryParams;
+  body: {
+    [key: string]: string | Blob;
+  };
+};
+
+type RequestMethod = "GET" | "POST";
 
 abstract class BaseClient {
   public fetch: typeof fetch;
@@ -21,11 +34,26 @@ abstract class BaseClient {
 
   protected async fetchResources<T>(
     routeName: string,
-    params: RouteParams,
+    routeParams: RouteParams,
     builder: ResourceBuilder<T>,
-    fetchOptions?: RequestInit,
+    params?: RequestParams,
+    method: RequestMethod = "GET",
   ): Promise<T[]> {
-    const url = this.buildURL(routeName, params);
+    const fetchOptions: RequestInit = { method };
+
+    if (params !== undefined && Object.keys(params.body).length > 0) {
+      const body = new FormData();
+      for (const key in params.body) {
+        const value = params.body[key];
+        if (value !== undefined) {
+          body.set(key, value);
+        }
+      }
+
+      fetchOptions.body = body;
+    }
+
+    const url = this.buildURL(routeName, routeParams, params?.query ?? {});
     const resp = await this.fetch(url, fetchOptions);
 
     if (!resp.ok) {
@@ -52,27 +80,32 @@ abstract class BaseClient {
 
   protected async fetchResourcesFromList<T>(
     routeName: string,
-    params: RouteParams,
+    routeParams: RouteParams,
     builder: ResourceBuilder<T>,
     key: keyof T,
     value: string | number,
     caseSensitive = false,
-    fetchOptions?: RequestInit,
+    params?: RequestParams,
+    method: RequestMethod = "GET",
   ): Promise<T[]> {
-    return this.fetchResources(routeName, params, builder, fetchOptions).then(
-      (list: T[]) => {
-        const f = (r: T) => {
-          const actualValue = r[key];
-          if (caseSensitive && typeof actualValue === "string") {
-            return actualValue.toLowerCase() === value.toString().toLowerCase();
-          }
+    return this.fetchResources(
+      routeName,
+      routeParams,
+      builder,
+      params,
+      method,
+    ).then((list: T[]) => {
+      const f = (r: T) => {
+        const actualValue = r[key];
+        if (caseSensitive && typeof actualValue === "string") {
+          return actualValue.toLowerCase() === value.toString().toLowerCase();
+        }
 
-          return actualValue === value;
-        };
+        return actualValue === value;
+      };
 
-        return list.filter(f);
-      },
-    );
+      return list.filter(f);
+    });
   }
 
   protected async fetchResourceFromList<T>(
@@ -95,13 +128,28 @@ abstract class BaseClient {
     });
   }
 
-  protected buildURL(routeName: string, params: RouteParams): string {
+  protected buildURL(
+    routeName: string,
+    routeParams: RouteParams,
+    queryParams: QueryParams,
+  ): string {
     const path = this.compileRoute(this.routes[routeName], {
-      ...params,
-      chainId: this.chainId,
+      ...routeParams,
+      chainId: String(this.chainId),
     });
 
-    return new URL(path, this.baseURI).toString();
+    const url = new URL(path, this.baseURI);
+
+    if (Object.keys(queryParams).length > 0) {
+      const sp = new URLSearchParams();
+      for (const k in queryParams) {
+        sp.append(k, queryParams[k]);
+      }
+
+      url.search = sp.toString();
+    }
+
+    return url.toString();
   }
 
   protected compileRoute(route: string, params: RouteParams): string {

@@ -12,11 +12,13 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint src",
-    "test": "vitest run",
+    "test": "vitest run --reporter verbose",
     "coverage": "vitest run --coverage",
-    "test:watch": "vitest",
+    "test:watch": "vitest --reporter verbose",
     "dev": "tsc --watch",
     "cli": "node --es-module-specifier-resolution=node --no-warnings  dist/cli/index.js",
+    "format": "prettier --write src",
+    "prettier-check": "pretty-quick --check .",
     "postinstall": "npm run build"
   },
   "author": "",

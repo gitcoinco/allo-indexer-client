@@ -187,4 +187,49 @@ describe("Client", () => {
       expect(scores.length).toEqual(4);
     });
   });
+
+  describe("getRoundMatchingFunds", () => {
+    test("sets the overrides in the body", async () => {
+      let fetchCalled = false;
+
+      const f = vi.fn(async (url, options) => {
+        const body = `[]`;
+        const responseMock = new Response(body, {});
+        fetchCalled = true;
+
+        expect(options.method).toEqual("POST");
+        expect(options.body.get("overrides")).not.toEqual(undefined);
+        expect(url).toEqual("https://test.dev/chains/0/rounds/1/matches");
+
+        expect(await options.body.get("overrides").text()).toEqual("test-data");
+
+        return Promise.resolve(responseMock);
+      });
+
+      const c = new Client(f, baseDataURI, chainId);
+      await c.getRoundMatchingFunds("1", new Blob(["test-data"]));
+      expect(fetchCalled).toEqual(true);
+    });
+
+    test("sets ignoreSaturation in the query string", async () => {
+      let fetchCalled = false;
+
+      const f = vi.fn(async (url, options) => {
+        const body = `[]`;
+        const responseMock = new Response(body, {});
+        fetchCalled = true;
+
+        expect(options.method).toEqual("POST");
+        expect(url).toEqual(
+          "https://test.dev/chains/0/rounds/1/matches?ignoreSaturation=true",
+        );
+
+        return Promise.resolve(responseMock);
+      });
+
+      const c = new Client(f, baseDataURI, chainId);
+      await c.getRoundMatchingFunds("1", new Blob(["test-data"]), true);
+      expect(fetchCalled).toEqual(true);
+    });
+  });
 });

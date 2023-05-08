@@ -2,7 +2,7 @@ import { RawObject, ResourceBuilder } from "./types.js";
 import { ResourceFetchError } from "./errors.js";
 
 type RouteParams = {
-  [key: string]: string | number;
+  [key: string]: string;
 };
 
 abstract class BaseClient {
@@ -98,7 +98,7 @@ abstract class BaseClient {
   protected buildURL(routeName: string, params: RouteParams): string {
     const path = this.compileRoute(this.routes[routeName], {
       ...params,
-      chainId: this.chainId,
+      chainId: String(this.chainId),
     });
 
     return new URL(path, this.baseURI).toString();

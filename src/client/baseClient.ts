@@ -41,18 +41,16 @@ abstract class BaseClient {
   ): Promise<T[]> {
     const fetchOptions: RequestInit = { method };
 
-    if (params !== undefined) {
-      if (Object.keys(params.body).length > 0) {
-        const body = new FormData();
-        for (const key in params.body) {
-          const value = params.body[key];
-          if (value !== undefined) {
-            body.set(key, value);
-          }
+    if (params !== undefined && Object.keys(params.body).length > 0) {
+      const body = new FormData();
+      for (const key in params.body) {
+        const value = params.body[key];
+        if (value !== undefined) {
+          body.set(key, value);
         }
-
-        fetchOptions.body = body;
       }
+
+      fetchOptions.body = body;
     }
 
     const url = this.buildURL(routeName, routeParams, params?.query ?? {});

@@ -107,23 +107,20 @@ export class Client extends BaseClient {
       params.query["ignoreSaturation"] = ignoreSaturation.toString();
     }
 
+    let method = "GET";
+    
     if (overrides) {
       params.body["overrides"] = overrides;
-      return this.fetchResources(
-        "roundMatchingFunds",
-        { roundId },
-        roundMatchBuilder,
-        params,
-        "POST",
-      );
-    } else {
-      return this.fetchResources(
-        "roundMatchingFunds",
-        { roundId },
-        roundMatchBuilder,
-        params,
-      );
+      method = "POST";
     }
+    
+    return this.fetchResources(
+        "roundMatchingFunds",
+        { roundId },
+        roundMatchBuilder,
+        params,
+        method,
+    );
 
   }
 

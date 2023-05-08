@@ -109,15 +109,22 @@ export class Client extends BaseClient {
 
     if (overrides) {
       params.body["overrides"] = overrides;
+      return this.fetchResources(
+        "roundMatchingFunds",
+        { roundId },
+        roundMatchBuilder,
+        params,
+        "POST",
+      );
+    } else {
+      return this.fetchResources(
+        "roundMatchingFunds",
+        { roundId },
+        roundMatchBuilder,
+        params,
+      );
     }
 
-    return this.fetchResources(
-      "roundMatchingFunds",
-      { roundId },
-      roundMatchBuilder,
-      params,
-      "POST",
-    );
   }
 
   getRoundProjects(roundId: string): Promise<Application[]> {

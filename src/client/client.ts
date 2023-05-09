@@ -1,4 +1,4 @@
-import BaseClient, { RequestParams } from "./baseClient.js";
+import BaseClient, {RequestMethod, RequestParams } from "./baseClient.js";
 import {
   projectBuilder,
   roundBuilder,
@@ -107,17 +107,21 @@ export class Client extends BaseClient {
       params.query["ignoreSaturation"] = ignoreSaturation.toString();
     }
 
+    let method: RequestMethod = "GET";
+
     if (overrides) {
       params.body["overrides"] = overrides;
+      method = "POST";
     }
 
     return this.fetchResources(
-      "roundMatchingFunds",
-      { roundId },
-      roundMatchBuilder,
-      params,
-      "POST",
+        "roundMatchingFunds",
+        { roundId },
+        roundMatchBuilder,
+        params,
+        method,
     );
+
   }
 
   getRoundProjects(roundId: string): Promise<Application[]> {

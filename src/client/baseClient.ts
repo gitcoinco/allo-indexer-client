@@ -16,7 +16,7 @@ export type RequestParams = {
   };
 };
 
-type RequestMethod = "GET" | "POST";
+export type RequestMethod = "GET" | "POST";
 
 abstract class BaseClient {
   public fetch: typeof fetch;

@@ -1,4 +1,4 @@
-import BaseClient, {RequestMethod, RequestParams } from "./baseClient.js";
+import BaseClient, { RequestMethod, RequestParams } from "./baseClient.js";
 import {
   projectBuilder,
   roundBuilder,
@@ -115,13 +115,12 @@ export class Client extends BaseClient {
     }
 
     return this.fetchResources(
-        "roundMatchingFunds",
-        { roundId },
-        roundMatchBuilder,
-        params,
-        method,
+      "roundMatchingFunds",
+      { roundId },
+      roundMatchBuilder,
+      params,
+      method,
     );
-
   }
 
   getRoundProjects(roundId: string): Promise<Application[]> {

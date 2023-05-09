@@ -223,7 +223,7 @@ describe("Client", () => {
 
         expect(options.method).toEqual("POST");
         expect(url).toEqual(
-          "https://test.dev/chains/0/rounds/1/matches?ignoreSaturation=true",
+          "https://test.dev/api/v1/chains/0/rounds/1/matches?ignoreSaturation=true",
         );
 
         return Promise.resolve(responseMock);

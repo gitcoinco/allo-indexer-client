@@ -199,7 +199,9 @@ describe("Client", () => {
 
         expect(options.method).toEqual("POST");
         expect(options.body.get("overrides")).not.toEqual(undefined);
-        expect(url).toEqual("https://test.dev/chains/0/rounds/1/matches");
+        expect(url).toEqual(
+          "https://test.dev/api/v1/chains/0/rounds/1/matches",
+        );
 
         expect(await options.body.get("overrides").text()).toEqual("test-data");
 
@@ -221,7 +223,7 @@ describe("Client", () => {
 
         expect(options.method).toEqual("POST");
         expect(url).toEqual(
-          "https://test.dev/chains/0/rounds/1/matches?ignoreSaturation=true",
+          "https://test.dev/api/v1/chains/0/rounds/1/matches?ignoreSaturation=true",
         );
 
         return Promise.resolve(responseMock);

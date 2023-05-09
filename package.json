@@ -18,7 +18,7 @@
     "dev": "tsc --watch",
     "cli": "node --es-module-specifier-resolution=node --no-warnings  dist/cli/index.js",
     "format": "prettier --write src",
-    "prettier-check": "pretty-quick --check .",
+    "prettier-check": "prettier --check .",
     "postinstall": "npm run build"
   },
   "author": "",

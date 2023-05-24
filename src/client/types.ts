@@ -34,6 +34,11 @@ export type Vote = {
   amountUSD: number;
 };
 
+export type DetailedVote = Vote & {
+  roundName: string;
+  projectTitle: string;
+};
+
 export type Application = {
   id: string;
   projectId: string;

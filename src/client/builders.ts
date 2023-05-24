@@ -7,6 +7,7 @@ import {
   Vote,
   Match,
   PassportScore,
+  DetailedVote,
 } from "./types.js";
 
 export const projectBuilder: ResourceBuilder<Project> = (
@@ -42,6 +43,14 @@ export const voteBuilder: ResourceBuilder<Vote> = (obj: RawObject): Vote => ({
   grantAddress: obj.grantAddress,
   amount: obj.amount,
   amountUSD: obj.amountUSD,
+});
+
+export const detailedVoteBuilder: ResourceBuilder<DetailedVote> = (
+  obj: RawObject,
+): DetailedVote => ({
+  ...voteBuilder(obj),
+  roundName: obj.roundName,
+  projectTitle: obj.projectTitle,
 });
 
 export const roundApplicationBuilder: ResourceBuilder<Application> = (

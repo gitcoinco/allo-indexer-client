@@ -43,6 +43,7 @@ export const voteBuilder: ResourceBuilder<Vote> = (obj: RawObject): Vote => ({
   grantAddress: obj.grantAddress,
   amount: obj.amount,
   amountUSD: obj.amountUSD,
+  transaction: obj.transaction,
 });
 
 export const detailedVoteBuilder: ResourceBuilder<DetailedVote> = (

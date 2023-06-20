@@ -32,6 +32,12 @@ export type Vote = {
   grantAddress: string;
   amount: string;
   amountUSD: number;
+  transaction: string;
+};
+
+export type DetailedVote = Vote & {
+  roundName: string;
+  projectTitle: string;
 };
 
 export type Application = {

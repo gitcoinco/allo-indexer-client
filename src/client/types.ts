@@ -27,6 +27,7 @@ export type Vote = {
   id: string;
   projectId: string;
   roundId: string;
+  applicationId: string;
   token: string;
   voter: string;
   grantAddress: string;
@@ -38,6 +39,8 @@ export type Vote = {
 export type DetailedVote = Vote & {
   roundName: string;
   projectTitle: string;
+  roundStartTime: number;
+  roundEndTime: number;
 };
 
 export type Application = {

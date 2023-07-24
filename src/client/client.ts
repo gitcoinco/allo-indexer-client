@@ -175,7 +175,7 @@ export class Client extends BaseClient {
     return this.fetchResources("passportScores", {}, passportScoreBuilder);
   }
 
-  getMatchingEstimations(
+  getMatchingEstimates(
     roundId: string,
     chainId: string,
     potentialVotes: {

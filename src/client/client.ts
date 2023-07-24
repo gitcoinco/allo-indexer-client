@@ -6,6 +6,7 @@ import {
   roundApplicationBuilder,
   roundMatchBuilder,
   passportScoreBuilder,
+  matchingEstimateBuilder,
   detailedVoteBuilder,
 } from "./builders.js";
 import {
@@ -15,6 +16,7 @@ import {
   Application,
   Match,
   PassportScore,
+  MatchingEstimate,
   DetailedVote,
 } from "./types.js";
 
@@ -29,6 +31,7 @@ export class Client extends BaseClient {
     roundProjects: "/data/:chainId/rounds/:roundId/projects.json",
     passportScores: "/data/passport_scores.json",
     roundMatchingFunds: "/api/v1/chains/:chainId/rounds/:roundId/matches",
+    estimate: "/api/v1/chains/:chainId/rounds/:roundId/estimate",
     contributions: "/data/:chainId/contributors/:address.json",
   };
 
@@ -170,6 +173,27 @@ export class Client extends BaseClient {
 
   getPassportScores(): Promise<PassportScore[]> {
     return this.fetchResources("passportScores", {}, passportScoreBuilder);
+  }
+
+  getMatchingEstimations(
+    roundId: string,
+    chainId: string,
+    potentialVotes: {
+      contributor: string;
+      recipient: string;
+      amount: bigint;
+    }[],
+  ): Promise<MatchingEstimate[]> {
+    return this.fetchResources(
+      "estimate",
+      { roundId, chainId },
+      matchingEstimateBuilder,
+      {
+        query: {},
+        body: { potentialVotes: JSON.stringify(potentialVotes) },
+      },
+      "POST",
+    );
   }
 
   getContributionsByAddress(address: string): Promise<DetailedVote[]> {

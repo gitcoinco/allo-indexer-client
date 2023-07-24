@@ -7,6 +7,7 @@ import {
   Vote,
   Match,
   PassportScore,
+  MatchingEstimate,
   DetailedVote,
 } from "./types.js";
 
@@ -83,6 +84,12 @@ export const roundMatchBuilder: ResourceBuilder<Match> = (
   projectId: obj.projectId,
   applicationId: obj.applicationId,
 });
+
+export const matchingEstimateBuilder: ResourceBuilder<MatchingEstimate> = (
+  obj: RawObject,
+): MatchingEstimate => {
+  return obj as MatchingEstimate;
+};
 
 export const passportScoreBuilder: ResourceBuilder<PassportScore> = (
   obj: RawObject,

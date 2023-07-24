@@ -1,4 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+import { Calculation } from "pluralistic";
+
 export type RawObject = Record<string, any>;
 
 export type ResourceBuilder<T> = (obj: RawObject) => T;
@@ -64,6 +66,10 @@ export type Match = {
   applicationId: string;
   projectName: string;
   payoutAddress: string;
+};
+
+export type MatchingEstimate = Calculation & {
+  difference: bigint;
 };
 
 export type PassportScore = {

@@ -188,8 +188,8 @@ export class Client extends BaseClient {
       "estimate",
       { roundId, chainId },
       matchingEstimateBuilder,
+      // @ts-expect-error Query is required in ReqParams but not actually required in our implementation
       {
-        query: {},
         body: { potentialVotes: JSON.stringify(potentialVotes) },
       },
       "POST",

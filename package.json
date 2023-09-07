@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/client/index.js",
   "types": "dist/client/index.d.ts",
-  "bin": "dist/cli/index.ts",
+  "bin": "dist/cli/index.js",
   "prettier": {
     "trailingComma": "all"
   },
